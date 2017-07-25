@@ -8,6 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		44A7FAE24C560D26C6C9C0AF /* Pods_DuesCalculateApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77543815B95836050CD8E1E4 /* Pods_DuesCalculateApp.framework */; };
+		553503661F2763B9001593EB /* MemberSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553503641F2763B9001593EB /* MemberSelectViewController.swift */; };
+		553503671F2763B9001593EB /* MemberSelectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 553503651F2763B9001593EB /* MemberSelectViewController.xib */; };
+		5535036A1F2763DF001593EB /* MoneyInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553503681F2763DF001593EB /* MoneyInputViewController.swift */; };
+		5535036B1F2763DF001593EB /* MoneyInputViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 553503691F2763DF001593EB /* MoneyInputViewController.xib */; };
+		5535036E1F2763EC001593EB /* PartyAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5535036C1F2763EC001593EB /* PartyAddViewController.swift */; };
+		5535036F1F2763EC001593EB /* PartyAddViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5535036D1F2763EC001593EB /* PartyAddViewController.xib */; };
+		553503721F2763FB001593EB /* PartyDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553503701F2763FB001593EB /* PartyDetailViewController.swift */; };
+		553503731F2763FB001593EB /* PartyDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 553503711F2763FB001593EB /* PartyDetailViewController.xib */; };
+		553503761F276408001593EB /* PartyListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553503741F276408001593EB /* PartyListViewController.swift */; };
+		553503771F276408001593EB /* PartyListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 553503751F276408001593EB /* PartyListViewController.xib */; };
+		5566B3AB1F27627A00ADED40 /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5566B3AA1F27627A00ADED40 /* DBManager.swift */; };
 		55A1CAD91F20ECAC00BF0635 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A1CAD81F20ECAC00BF0635 /* AppDelegate.swift */; };
 		55A1CADB1F20ECAC00BF0635 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A1CADA1F20ECAC00BF0635 /* ViewController.swift */; };
 		55A1CADE1F20ECAC00BF0635 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55A1CADC1F20ECAC00BF0635 /* Main.storyboard */; };
@@ -17,6 +28,17 @@
 
 /* Begin PBXFileReference section */
 		19C681F931B085CDB15B8D74 /* Pods-DuesCalculateApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DuesCalculateApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-DuesCalculateApp/Pods-DuesCalculateApp.release.xcconfig"; sourceTree = "<group>"; };
+		553503641F2763B9001593EB /* MemberSelectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberSelectViewController.swift; sourceTree = "<group>"; };
+		553503651F2763B9001593EB /* MemberSelectViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MemberSelectViewController.xib; sourceTree = "<group>"; };
+		553503681F2763DF001593EB /* MoneyInputViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoneyInputViewController.swift; sourceTree = "<group>"; };
+		553503691F2763DF001593EB /* MoneyInputViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MoneyInputViewController.xib; sourceTree = "<group>"; };
+		5535036C1F2763EC001593EB /* PartyAddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyAddViewController.swift; sourceTree = "<group>"; };
+		5535036D1F2763EC001593EB /* PartyAddViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PartyAddViewController.xib; sourceTree = "<group>"; };
+		553503701F2763FB001593EB /* PartyDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyDetailViewController.swift; sourceTree = "<group>"; };
+		553503711F2763FB001593EB /* PartyDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PartyDetailViewController.xib; sourceTree = "<group>"; };
+		553503741F276408001593EB /* PartyListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyListViewController.swift; sourceTree = "<group>"; };
+		553503751F276408001593EB /* PartyListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PartyListViewController.xib; sourceTree = "<group>"; };
+		5566B3AA1F27627A00ADED40 /* DBManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBManager.swift; sourceTree = "<group>"; };
 		55A1CAD51F20ECAC00BF0635 /* DuesCalculateApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DuesCalculateApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55A1CAD81F20ECAC00BF0635 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		55A1CADA1F20ECAC00BF0635 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -40,13 +62,86 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5566B3A21F2761C400ADED40 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5566B3A31F2761D600ADED40 /* PartyList */,
+				5566B3A41F2761EA00ADED40 /* PartyAdd */,
+				5566B3A51F27620800ADED40 /* PartyDetail */,
+				5566B3A61F27621800ADED40 /* MemberSelect */,
+				5566B3A71F27622300ADED40 /* MoneyInput */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5566B3A31F2761D600ADED40 /* PartyList */ = {
+			isa = PBXGroup;
+			children = (
+				553503741F276408001593EB /* PartyListViewController.swift */,
+				553503751F276408001593EB /* PartyListViewController.xib */,
+			);
+			path = PartyList;
+			sourceTree = "<group>";
+		};
+		5566B3A41F2761EA00ADED40 /* PartyAdd */ = {
+			isa = PBXGroup;
+			children = (
+				5535036C1F2763EC001593EB /* PartyAddViewController.swift */,
+				5535036D1F2763EC001593EB /* PartyAddViewController.xib */,
+			);
+			path = PartyAdd;
+			sourceTree = "<group>";
+		};
+		5566B3A51F27620800ADED40 /* PartyDetail */ = {
+			isa = PBXGroup;
+			children = (
+				553503701F2763FB001593EB /* PartyDetailViewController.swift */,
+				553503711F2763FB001593EB /* PartyDetailViewController.xib */,
+			);
+			path = PartyDetail;
+			sourceTree = "<group>";
+		};
+		5566B3A61F27621800ADED40 /* MemberSelect */ = {
+			isa = PBXGroup;
+			children = (
+				553503641F2763B9001593EB /* MemberSelectViewController.swift */,
+				553503651F2763B9001593EB /* MemberSelectViewController.xib */,
+			);
+			path = MemberSelect;
+			sourceTree = "<group>";
+		};
+		5566B3A71F27622300ADED40 /* MoneyInput */ = {
+			isa = PBXGroup;
+			children = (
+				553503681F2763DF001593EB /* MoneyInputViewController.swift */,
+				553503691F2763DF001593EB /* MoneyInputViewController.xib */,
+			);
+			path = MoneyInput;
+			sourceTree = "<group>";
+		};
+		5566B3A81F27624200ADED40 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5566B3A91F27624A00ADED40 /* DB */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5566B3A91F27624A00ADED40 /* DB */ = {
+			isa = PBXGroup;
+			children = (
+				5566B3AA1F27627A00ADED40 /* DBManager.swift */,
+			);
+			path = DB;
+			sourceTree = "<group>";
+		};
 		55A1CACC1F20ECAC00BF0635 = {
 			isa = PBXGroup;
 			children = (
 				55A1CAD71F20ECAC00BF0635 /* DuesCalculateApp */,
-				55A1CAD61F20ECAC00BF0635 /* Products */,
-				DED75426BD401ABD7C525F1D /* Pods */,
 				89E6CF9502D31431BAB52328 /* Frameworks */,
+				DED75426BD401ABD7C525F1D /* Pods */,
+				55A1CAD61F20ECAC00BF0635 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -61,12 +156,14 @@
 		55A1CAD71F20ECAC00BF0635 /* DuesCalculateApp */ = {
 			isa = PBXGroup;
 			children = (
+				5566B3A81F27624200ADED40 /* Model */,
+				5566B3A21F2761C400ADED40 /* View */,
 				55A1CAD81F20ECAC00BF0635 /* AppDelegate.swift */,
-				55A1CADA1F20ECAC00BF0635 /* ViewController.swift */,
-				55A1CADC1F20ECAC00BF0635 /* Main.storyboard */,
 				55A1CADF1F20ECAC00BF0635 /* Assets.xcassets */,
-				55A1CAE11F20ECAC00BF0635 /* LaunchScreen.storyboard */,
 				55A1CAE41F20ECAC00BF0635 /* Info.plist */,
+				55A1CAE11F20ECAC00BF0635 /* LaunchScreen.storyboard */,
+				55A1CADC1F20ECAC00BF0635 /* Main.storyboard */,
+				55A1CADA1F20ECAC00BF0635 /* ViewController.swift */,
 			);
 			path = DuesCalculateApp;
 			sourceTree = "<group>";
@@ -152,7 +249,12 @@
 			files = (
 				55A1CAE31F20ECAC00BF0635 /* LaunchScreen.storyboard in Resources */,
 				55A1CAE01F20ECAC00BF0635 /* Assets.xcassets in Resources */,
+				553503731F2763FB001593EB /* PartyDetailViewController.xib in Resources */,
+				553503671F2763B9001593EB /* MemberSelectViewController.xib in Resources */,
+				5535036F1F2763EC001593EB /* PartyAddViewController.xib in Resources */,
 				55A1CADE1F20ECAC00BF0635 /* Main.storyboard in Resources */,
+				5535036B1F2763DF001593EB /* MoneyInputViewController.xib in Resources */,
+				553503771F276408001593EB /* PartyListViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -211,7 +313,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				553503661F2763B9001593EB /* MemberSelectViewController.swift in Sources */,
+				5535036E1F2763EC001593EB /* PartyAddViewController.swift in Sources */,
+				5535036A1F2763DF001593EB /* MoneyInputViewController.swift in Sources */,
+				553503761F276408001593EB /* PartyListViewController.swift in Sources */,
+				553503721F2763FB001593EB /* PartyDetailViewController.swift in Sources */,
 				55A1CADB1F20ECAC00BF0635 /* ViewController.swift in Sources */,
+				5566B3AB1F27627A00ADED40 /* DBManager.swift in Sources */,
 				55A1CAD91F20ECAC00BF0635 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -225,6 +333,7 @@
 				55A1CADD1F20ECAC00BF0635 /* Base */,
 			);
 			name = Main.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 		55A1CAE11F20ECAC00BF0635 /* LaunchScreen.storyboard */ = {
@@ -233,6 +342,7 @@
 				55A1CAE21F20ECAC00BF0635 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -378,6 +488,7 @@
 				55A1CAE91F20ECAC00BF0635 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
