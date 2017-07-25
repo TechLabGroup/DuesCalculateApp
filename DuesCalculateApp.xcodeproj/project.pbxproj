@@ -20,8 +20,6 @@
 		553503771F276408001593EB /* PartyListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 553503751F276408001593EB /* PartyListViewController.xib */; };
 		5566B3AB1F27627A00ADED40 /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5566B3AA1F27627A00ADED40 /* DBManager.swift */; };
 		55A1CAD91F20ECAC00BF0635 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A1CAD81F20ECAC00BF0635 /* AppDelegate.swift */; };
-		55A1CADB1F20ECAC00BF0635 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A1CADA1F20ECAC00BF0635 /* ViewController.swift */; };
-		55A1CADE1F20ECAC00BF0635 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55A1CADC1F20ECAC00BF0635 /* Main.storyboard */; };
 		55A1CAE01F20ECAC00BF0635 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55A1CADF1F20ECAC00BF0635 /* Assets.xcassets */; };
 		55A1CAE31F20ECAC00BF0635 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55A1CAE11F20ECAC00BF0635 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -41,8 +39,6 @@
 		5566B3AA1F27627A00ADED40 /* DBManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBManager.swift; sourceTree = "<group>"; };
 		55A1CAD51F20ECAC00BF0635 /* DuesCalculateApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DuesCalculateApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55A1CAD81F20ECAC00BF0635 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		55A1CADA1F20ECAC00BF0635 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		55A1CADD1F20ECAC00BF0635 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		55A1CADF1F20ECAC00BF0635 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		55A1CAE21F20ECAC00BF0635 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		55A1CAE41F20ECAC00BF0635 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -162,8 +158,6 @@
 				55A1CADF1F20ECAC00BF0635 /* Assets.xcassets */,
 				55A1CAE41F20ECAC00BF0635 /* Info.plist */,
 				55A1CAE11F20ECAC00BF0635 /* LaunchScreen.storyboard */,
-				55A1CADC1F20ECAC00BF0635 /* Main.storyboard */,
-				55A1CADA1F20ECAC00BF0635 /* ViewController.swift */,
 			);
 			path = DuesCalculateApp;
 			sourceTree = "<group>";
@@ -252,7 +246,6 @@
 				553503731F2763FB001593EB /* PartyDetailViewController.xib in Resources */,
 				553503671F2763B9001593EB /* MemberSelectViewController.xib in Resources */,
 				5535036F1F2763EC001593EB /* PartyAddViewController.xib in Resources */,
-				55A1CADE1F20ECAC00BF0635 /* Main.storyboard in Resources */,
 				5535036B1F2763DF001593EB /* MoneyInputViewController.xib in Resources */,
 				553503771F276408001593EB /* PartyListViewController.xib in Resources */,
 			);
@@ -318,7 +311,6 @@
 				5535036A1F2763DF001593EB /* MoneyInputViewController.swift in Sources */,
 				553503761F276408001593EB /* PartyListViewController.swift in Sources */,
 				553503721F2763FB001593EB /* PartyDetailViewController.swift in Sources */,
-				55A1CADB1F20ECAC00BF0635 /* ViewController.swift in Sources */,
 				5566B3AB1F27627A00ADED40 /* DBManager.swift in Sources */,
 				55A1CAD91F20ECAC00BF0635 /* AppDelegate.swift in Sources */,
 			);
@@ -327,15 +319,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		55A1CADC1F20ECAC00BF0635 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				55A1CADD1F20ECAC00BF0635 /* Base */,
-			);
-			name = Main.storyboard;
-			path = .;
-			sourceTree = "<group>";
-		};
 		55A1CAE11F20ECAC00BF0635 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
