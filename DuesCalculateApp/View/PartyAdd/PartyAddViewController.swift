@@ -12,6 +12,9 @@ class PartyAddViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // NavigationBarのタイトルを設定
+        self.navigationItem.title = "飲み会作成"
+
         // Do any additional setup after loading the view.
     }
 
