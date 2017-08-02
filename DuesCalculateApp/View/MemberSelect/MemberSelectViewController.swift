@@ -20,6 +20,10 @@ class MemberSelectViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func tapMoneyInputButton(_ sender: Any) {
+        let vc = MoneyInputViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 
     /*
     // MARK: - Navigation
