@@ -27,13 +27,17 @@
                     </connections>
                 </button>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ekv-9b-z0h">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="607"/>
+                    <rect key="frame" x="0.0" y="44" width="375" height="563"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="GOg-tI-XhA"/>
+                        <outlet property="delegate" destination="-1" id="Fry-oT-x8S"/>
+                    </connections>
                 </tableView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="ekv-9b-z0h" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="MwR-6X-1T4"/>
+                <constraint firstItem="ekv-9b-z0h" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="44" id="MwR-6X-1T4"/>
                 <constraint firstItem="seM-MR-tW3" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="QgN-pI-b8Z"/>
                 <constraint firstItem="seM-MR-tW3" firstAttribute="top" secondItem="ekv-9b-z0h" secondAttribute="bottom" constant="15" id="UIF-ZX-rL7"/>
                 <constraint firstItem="ekv-9b-z0h" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="VBW-W6-C52"/>

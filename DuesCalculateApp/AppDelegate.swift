@@ -18,7 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
 
         // アプリ起動時はPartyListViewControllerを表示する
-        let vc = PartyListViewController()
+//        let vc = PartyListViewController()
+        let vc = MemberSelectViewController()
         let navi = UINavigationController(rootViewController: vc)
         
         window = UIWindow(frame: UIScreen.main.bounds)
