@@ -15,7 +15,7 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
         // NavigationBarのタイトルを設定
         self.navigationItem.title = "飲み会一覧"
         
-        // NavigationBarの右側に+ボランを配置する
+        // NavigationBarの右側に+ボタンを配置する
         let rigthItem =  UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: #selector(tapAddButton))
         self.navigationItem.rightBarButtonItem = rigthItem
     }
