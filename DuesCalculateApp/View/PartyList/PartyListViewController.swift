@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class PartyListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -45,7 +46,7 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
         // #warning Incomplete implementation, return the number of rows
         
         // 通常は引数のセクションで分岐して値を返却する
-        return 3
+        return 5
     }
     
 
@@ -53,7 +54,21 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
        // let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
         let cell = UITableViewCell()
         
-        cell.textLabel?.text = "新人歓迎会"
+        let testParty = PartyTable()
+        testParty.partyId = 1
+        testParty.partyName = "CP2キックオフ"
+//        testParty.date = Calendar.date(from: DateComponents(year: 2017, month: 10, day: 1))
+        testParty.totalAmount = 100000
+        let realm = try! Realm()
+
+        try! realm.write() {
+            realm.add(testParty)
+        }
+        let testTitle = realm.objects(PartyTable.self).first
+        
+        
+        cell.textLabel?.text = testTitle?.partyName
+//        cell.textLabel?.text = "新人歓迎会"
 
      // Configure the cell...
      
