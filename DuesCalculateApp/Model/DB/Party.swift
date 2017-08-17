@@ -1,5 +1,5 @@
 //
-//  PartyTable.swift
+//  Party.swift
 //  DuesCalculateApp
 //
 //  Created by Tanino-Sato on 2017/08/10.
@@ -9,11 +9,11 @@
 import Foundation
 import RealmSwift
 
-final class PartyTable: Object {
-    dynamic var partyId = Int() //飲み会ID
-    dynamic var partyName  = String() //飲み会名
-//    dynamic var date  = Date() //開催日
-    dynamic var totalAmount = Int() //合計金額
+final class Party: Object {
+    dynamic var partyId : Int = 0 //飲み会ID
+    dynamic var partyName : String = "" //飲み会名
+//    dynamic var date : Date //開催日
+    dynamic var totalAmount : Int = 0 //合計金額
     
     //主キーに飲み会IDを設定
     override static func primaryKey() -> String? {

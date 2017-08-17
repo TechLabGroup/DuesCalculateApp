@@ -20,13 +20,10 @@ class PartyAddViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = leftItem
         
     }
-    
-        func tapCloseButton() {
-        dismiss(animated: true, completion: nil)
-        
-        
-    }
 
+    func tapCloseButton() {
+        dismiss(animated: true, completion: nil)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
