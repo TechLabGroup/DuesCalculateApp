@@ -53,26 +53,8 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        // let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
         let cell = UITableViewCell()
-        
 
-        let realm = try! Realm()
-
-        try! realm.write() {
-            
-            realm.deleteAll()
-            let testParty = Party()
-            testParty.partyId = 1
-            testParty.partyName = "CP2キックオフ"
-            //        testParty.date = Calendar.date(from: DateComponents(year: 2017, month: 10, day: 1))
-            testParty.totalAmount = 100000
-            
-            realm.add(testParty)
-        }
-        let testTitle = realm.objects(Party.self).first?.partyName
-        
-        cell.textLabel?.text = testTitle
-        
-//        cell.textLabel?.text = "新人歓迎会"
+        cell.textLabel?.text = "新人歓迎会"
 
      // Configure the cell...
      
