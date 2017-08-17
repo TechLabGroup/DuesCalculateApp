@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class PartyListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -15,7 +16,7 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
         // NavigationBarのタイトルを設定
         self.navigationItem.title = "飲み会一覧"
         
-        // NavigationBarの右側に+ボランを配置する
+        // NavigationBarの右側に+ボタンを配置する
         let rigthItem =  UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: #selector(tapAddButton))
         self.navigationItem.rightBarButtonItem = rigthItem
     }
@@ -45,14 +46,14 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
         // #warning Incomplete implementation, return the number of rows
         
         // 通常は引数のセクションで分岐して値を返却する
-        return 3
+        return 5
     }
     
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        // let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
         let cell = UITableViewCell()
-        
+
         cell.textLabel?.text = "新人歓迎会"
 
      // Configure the cell...

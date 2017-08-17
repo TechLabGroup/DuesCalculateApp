@@ -15,7 +15,14 @@ class PartyAddViewController: UIViewController {
         // NavigationBarのタイトルを設定
         self.navigationItem.title = "飲み会作成"
 
-        // Do any additional setup after loading the view.
+        // NavigationBarの左側に飲み会一覧に閉じるボタンを配置する
+        let leftItem =  UIBarButtonItem(title: "閉じる", style: .plain, target: self, action: #selector(tapCloseButton))
+        self.navigationItem.leftBarButtonItem = leftItem
+        
+    }
+
+    func tapCloseButton() {
+        dismiss(animated: true, completion: nil)
     }
 
     override func didReceiveMemoryWarning() {
