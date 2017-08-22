@@ -9,6 +9,9 @@ import UIKit
 
 class PartyAddViewController: UIViewController {
 
+    // MARK: - Properties
+
+    // MARK: - LyfeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -21,24 +24,29 @@ class PartyAddViewController: UIViewController {
         
     }
 
-    func tapCloseButton() {
-        dismiss(animated: true, completion: nil)
-    }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // MARK: - private method
+    func tapCloseButton() {
+        dismiss(animated: true, completion: nil)
     }
-    */
 
+    // TODO 入力値精査
+    // TODO 入力値が異常な場合のボタン無効化操作
+
+    // MARK: - IBOutlet
+    @IBOutlet weak var inputPartyName: UITextField!
+
+    @IBOutlet weak var inputPartyDate: UITextField!
+    
+    @IBOutlet weak var inputTotalAmount: UITextField!
+
+    @IBOutlet weak var buttonRegister: UIButton!
+    
+    @IBAction func tapRegisterButton(_ sender: Any) {
+
+    }
 }
