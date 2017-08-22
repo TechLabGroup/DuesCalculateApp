@@ -25,8 +25,6 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
         let vc = PartyAddViewController()
         let nc = UINavigationController(rootViewController: vc)
         present(nc, animated: true, completion: nil)
-    
-    
     }
     
     override func didReceiveMemoryWarning() {
@@ -36,7 +34,6 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
     
     
     // MARK: - Table view data source
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -46,15 +43,17 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
         // #warning Incomplete implementation, return the number of rows
         
         // 通常は引数のセクションで分岐して値を返却する
-        return 5
+        return DBManager().getNumberOfParties()
     }
     
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        // let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
         let cell = UITableViewCell()
+        let object = DBManager().searchParty()[indexPath.row]
+        
 
-        cell.textLabel?.text = "新人歓迎会"
+        cell.textLabel?.text = object.partyName
 
      // Configure the cell...
      
