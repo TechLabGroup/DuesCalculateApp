@@ -47,6 +47,15 @@ class PartyAddViewController: UIViewController {
     @IBOutlet weak var buttonRegister: UIButton!
     
     @IBAction func tapRegisterButton(_ sender: Any) {
-
+        let partyName = inputPartyName.text
+        let partyDate = inputPartyDate.text
+        
+        
+        let totalAmount:Int? = Int(inputTotalAmount.text!)
+        
+        let _:Bool = DBManager().createParty(partyName: partyName!,partyDate: partyDate!,totalAmount: totalAmount!)
+        
+        // ボタンをタップしたら画面を閉じる
+        dismiss(animated: true, completion: nil)
     }
 }
