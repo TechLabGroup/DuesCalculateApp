@@ -1,0 +1,57 @@
+# Lint対象から外すファイルのあるパスを記述
+excluded:
+  - Pods
+
+# 無効にするルール
+disabled_rules:
+  - trailing_whitespace # 余分に改行がある方が視認性が上がる為、無効
+  - force_cast # storyboardからVC作成など強制キャストしないといけないケースもあるため、無効
+  - force_try
+  - type_name
+  - variable_name
+  - file_length
+  - line_length
+  - type_body_length
+  - function_body_length
+  - function_parameter_count
+  - cyclomatic_complexity
+  - vertical_whitespace
+
+# 有効にするOpt-Inルール
+opt_in_rules:
+  # - force_unwrapping
+  # - empty_count
+
+# カスタムルール
+custom_rules:
+
+  # コロンの後にスペースが必要（Dictionary定義へのケア）
+  spacer_colon:
+    name: "Spacer Colon"
+    regex: "(:\\S)"
+    match_kinds:
+      - argument
+      - identifier
+      - keyword
+      - number
+      - objectliteral
+      - parameter
+      - typeidentifier
+    message: "Need single space after colon."
+    serverity: warning
+
+  spacer_colon_doublequote:
+    name: "Spacer Colon Doublequote"
+    regex: "(:\"[^, )])"
+    match_kinds:
+      - string
+    message: "Need single space after colon."
+    serverity: warning
+
+  # コーディング規約「7-1. 文字列長判定にはcharacters.countを使う」
+  string_length:
+    name: "String length"
+    regex: "( as NSString\\)\\.length)"
+    message: "Use characters.count for String length."
+    serverity: warning
+
