@@ -48,7 +48,7 @@ custom_rules:
     message: "Need single space after colon."
     serverity: warning
 
-  # コーディング規約「7-1. 文字列長判定にはcharacters.countを使う」
+  # 文字列長判定にはcharacters.countを使う
   string_length:
     name: "String length"
     regex: "( as NSString\\)\\.length)"
