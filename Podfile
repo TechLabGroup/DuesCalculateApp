@@ -7,5 +7,6 @@ target 'DuesCalculateApp' do
 
   # Pods for DuesCalculateApp
   pod 'RealmSwift'
+  pod 'SwiftLint'
 
 end
