@@ -20,7 +20,7 @@ final class DBManager {
         party.date = partyDate
         party.totalAmount = totalAmount
         
-        try! realm.write() {
+        try! realm.write {
             realm.add(party)
         }
         return true

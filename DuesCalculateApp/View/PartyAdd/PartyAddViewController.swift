@@ -34,8 +34,8 @@ class PartyAddViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
 
-    // TODO 入力値精査
-    // TODO 入力値が異常な場合のボタン無効化操作
+    // todo 入力値精査
+    // todo 入力値が異常な場合のボタン無効化操作
 
     // MARK: - IBOutlet
     @IBOutlet weak var inputPartyName: UITextField!
@@ -51,9 +51,9 @@ class PartyAddViewController: UIViewController {
         let partyDate = inputPartyDate.text
         
         
-        let totalAmount:Int? = Int(inputTotalAmount.text!)
+        let totalAmount: Int? = Int(inputTotalAmount.text!)
         
-        let _:Bool = DBManager().createParty(partyName: partyName!,partyDate: partyDate!,totalAmount: totalAmount!)
+        let _: Bool = DBManager().createParty(partyName: partyName!, partyDate: partyDate!, totalAmount: totalAmount!)
         
         // ボタンをタップしたら画面を閉じる
         dismiss(animated: true, completion: nil)
