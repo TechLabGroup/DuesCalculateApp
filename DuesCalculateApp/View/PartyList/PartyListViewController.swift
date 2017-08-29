@@ -9,7 +9,11 @@ import UIKit
 import RealmSwift
 
 class PartyListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
+    
+    var object: Results<Party>!
+    
+    @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -19,8 +23,17 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
         // NavigationBarの右側に+ボタンを配置する
         let rigthItem =  UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: #selector(tapAddButton))
         self.navigationItem.rightBarButtonItem = rigthItem
-    }
+        
+        object = DBManager().searchParty()
 
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        tableView.reloadData()
+    }
+    
     func tapAddButton() {
         let vc = PartyAddViewController()
         let nc = UINavigationController(rootViewController: vc)
@@ -43,17 +56,15 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
         // #warning Incomplete implementation, return the number of rows
         
         // 通常は引数のセクションで分岐して値を返却する
-        return DBManager().getNumberOfParties()
+        return object.count
     }
     
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        // let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
         let cell = UITableViewCell()
-        let object = DBManager().searchParty()[indexPath.row]
-        
 
-        cell.textLabel?.text = object.partyName
+        cell.textLabel?.text = object[indexPath.row].partyName
 
      // Configure the cell...
      
@@ -65,6 +76,7 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
         navigationController?.pushViewController(vc, animated: true)
     
     }
+
     
     /*
      // Override to support conditional editing of the table view.

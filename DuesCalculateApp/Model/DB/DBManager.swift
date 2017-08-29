@@ -31,12 +31,6 @@ final class DBManager {
         return (realm.objects(Party.self).max(ofProperty: "partyId") as Int? ?? 0) + 1
     }
     
-    public func getNumberOfParties() -> Int {
-        let realm = try! Realm()
-        let party = realm.objects(Party.self)
-        return party.count
-    }
-    
     public func searchParty() -> Results<Party> {
         let realm = try! Realm()
         let party = realm.objects(Party.self)
