@@ -37,4 +37,12 @@ final class DBManager {
         return party
     }
     
+    public func deleteParty(party: Results<Party>, indexId: Int) {
+        let realm = try! Realm()
+        try! realm.write {
+            realm.delete(party[indexId])
+        }
+        
+    }
+    
 }

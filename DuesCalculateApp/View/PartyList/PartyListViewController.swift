@@ -25,6 +25,12 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
         self.navigationItem.rightBarButtonItem = rigthItem
         
         object = DBManager().searchParty()
+        
+        
+        //自作セルをテーブルビューに登録する。
+        let partyCell = UINib(nibName: "PartyTableViewCell", bundle: nil)
+        tableView.register(partyCell, forCellReuseIdentifier: "PartyCell")
+        
 
     }
     
@@ -62,9 +68,16 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        // let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-        let cell = UITableViewCell()
+       // let cell = UITableViewCell()
+        
+        //セルを取得する。
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PartyCell", for: indexPath) as! PartyTableViewCell
+        
+        
+        cell.partyName?.text = object[indexPath.row].partyName
+        cell.date?.text = object[indexPath.row].date
 
-        cell.textLabel?.text = object[indexPath.row].partyName
+//        cell.textLabel?.text = object[indexPath.row].partyName
 
      // Configure the cell...
      
@@ -86,17 +99,19 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
      }
      */
     
-    /*
+    
      // Override to support editing the table view.
-     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-     if editingStyle == .delete {
-     // Delete the row from the data source
-     tableView.deleteRows(at: [indexPath], with: .fade)
-     } else if editingStyle == .insert {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            // Delete the row from the data source
+            DBManager().deleteParty(party: object, indexId: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+
+            //        } else if editingStyle == .insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+        }
      }
-     }
-     */
+ 
     
     /*
      // Override to support rearranging the table view.
