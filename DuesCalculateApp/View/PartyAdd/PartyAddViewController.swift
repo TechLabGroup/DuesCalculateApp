@@ -31,7 +31,7 @@ class PartyAddViewController: UIViewController {
     }
     
     // MARK: - private method
-    func tapCloseButton() {
+    @objc private func tapCloseButton() {
         dismiss(animated: true, completion: nil)
     }
 
@@ -51,9 +51,10 @@ class PartyAddViewController: UIViewController {
         let partyName = inputPartyName.text
         let partyDate = inputPartyDate.text
         
+        // todo: 精査後要修正
+        let totalAmount = Int(inputTotalAmount.text!)
         
-        let totalAmount: Int? = Int(inputTotalAmount.text!)
-        
+        // todo: 精査後要修正
         let _: Bool = DBManager().createParty(partyName: partyName!, partyDate: partyDate!, totalAmount: totalAmount!)
         
         // ボタンをタップしたら画面を閉じる

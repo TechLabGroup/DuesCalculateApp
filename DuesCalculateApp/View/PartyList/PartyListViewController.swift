@@ -40,7 +40,7 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
         tableView.reloadData()
     }
     
-    func tapAddButton() {
+    @objc private func tapAddButton() {
         let vc = PartyAddViewController()
         let nc = UINavigationController(rootViewController: vc)
         present(nc, animated: true, completion: nil)
