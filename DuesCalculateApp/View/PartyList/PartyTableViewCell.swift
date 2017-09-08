@@ -11,6 +11,7 @@ import UIKit
 class PartyTableViewCell: UITableViewCell {
     @IBOutlet weak var date: UILabel!
     @IBOutlet weak var partyName: UILabel!
+    var partyId: Int = 0
 
     override func awakeFromNib() {
         super.awakeFromNib()

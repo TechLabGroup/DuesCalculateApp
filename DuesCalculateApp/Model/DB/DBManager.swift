@@ -31,16 +31,17 @@ final class DBManager {
         return (realm.objects(Party.self).max(ofProperty: "partyId") as Int? ?? 0) + 1
     }
     
-    public func searchParty() -> Results<Party> {
+    public func searchParty() -> [Party] {
         let realm = try! Realm()
         let party = realm.objects(Party.self)
-        return party
+        return Array(party)
     }
     
-    public func deleteParty(party: Results<Party>, indexId: Int) {
+    public func deleteParty(partyId: Int) {
         let realm = try! Realm()
+        let party = realm.objects(Party.self)
         try! realm.write {
-            realm.delete(party[indexId])
+            realm.delete(party[partyId])
         }
         
     }
