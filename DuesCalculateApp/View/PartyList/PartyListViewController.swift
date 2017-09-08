@@ -104,20 +104,38 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
     
     
      // Override to support editing the table view.
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data sourc
+//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete {
+//            // Delete the row from the data sourc
+//        
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "PartyCell", for: indexPath) as! PartyTableViewCell
+//            DBManager().deleteParty(partyId: cell.partyId)
+//            parties = DBManager().searchParty()
+//            tableView.deleteRows(at: [indexPath], with: .fade)
+//
+//            //        } else if editingStyle == .insert {
+//            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+//        }
+//     }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        // supercedes -tableView:titleForDeleteConfirmationButtonForRowAtIndexPath: if return value is non-nil
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PartyCell", for: indexPath) as! PartyTableViewCell
         
-            let cell = tableView.dequeueReusableCell(withIdentifier: "PartyCell", for: indexPath) as! PartyTableViewCell
+        let deleteButton: UITableViewRowAction = UITableViewRowAction(style: .normal, title: "削除") {(action, indexPath) -> Void in
             DBManager().deleteParty(partyId: cell.partyId)
-            
+            self.parties = DBManager().searchParty()
             tableView.deleteRows(at: [indexPath], with: .fade)
-
-            //        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
-     }
- 
+        deleteButton.backgroundColor = UIColor.red
+        
+        let editButton: UITableViewRowAction = UITableViewRowAction(style: .normal, title: "編集") {(action, indexPath) -> Void in
+            self.tapAddButton()
+        }
+        editButton.backgroundColor = UIColor.blue
+        return [deleteButton, editButton]
+    }
+
     
     /*
      // Override to support rearranging the table view.
