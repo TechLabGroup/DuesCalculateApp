@@ -55,7 +55,7 @@ class PartyAddViewController: UIViewController {
         let totalAmount = Int(inputTotalAmount.text!)
         
         // todo: 精査後要修正
-        let _: Bool = DBManager().createParty(partyName: partyName!, partyDate: partyDate!, totalAmount: totalAmount!)
+        let _: Bool = DBManager.createParty(partyName: partyName!, partyDate: partyDate!, totalAmount: totalAmount!)
         
         // ボタンをタップしたら画面を閉じる
         dismiss(animated: true, completion: nil)

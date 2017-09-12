@@ -10,7 +10,7 @@ import RealmSwift
 
 class PartyListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var parties: [Party]!
+    var parties: [Party]?
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -24,7 +24,7 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
         let rigthItem =  UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: #selector(tapAddButton))
         self.navigationItem.rightBarButtonItem = rigthItem
         
-        parties = DBManager().searchParty()
+        parties = DBManager.searchParty()
         
         
         //自作セルをテーブルビューに登録する。
@@ -37,7 +37,7 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        parties = DBManager().searchParty()
+        parties = DBManager.searchParty()
         tableView.reloadData()
     }
     
@@ -63,26 +63,19 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
         // #warning Incomplete implementation, return the number of rows
         
         // 通常は引数のセクションで分岐して値を返却する
-        return parties.count
+        return parties!.count
     }
     
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       // let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-       // let cell = UITableViewCell()
         
         //セルを取得する。
         let cell = tableView.dequeueReusableCell(withIdentifier: "PartyCell", for: indexPath) as! PartyTableViewCell
         
         
-        cell.partyName?.text = parties[indexPath.row].partyName
-        cell.date?.text = parties[indexPath.row].date
-        cell.partyId = parties[indexPath.row].partyId
-
-
-//        cell.textLabel?.text = object[indexPath.row].partyName
-
-     // Configure the cell...
+        cell.partyName?.text = parties?[indexPath.row].partyName
+        cell.date?.text = parties?[indexPath.row].date
+        cell.partyId = (parties?[indexPath.row].partyId)!
      
         return cell
      }
@@ -108,13 +101,13 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
         if editingStyle == .delete {
             // Delete the row from the data sourc
         
-            let cell = tableView.dequeueReusableCell(withIdentifier: "PartyCell", for: indexPath) as! PartyTableViewCell
-            DBManager().deleteParty(partyId: cell.partyId)
+            let cell = tableView.cellForRow(at: indexPath) as! PartyTableViewCell
+            
+            DBManager.deleteParty(partyId: cell.partyId!)
+            parties = DBManager.searchParty()
             
             tableView.deleteRows(at: [indexPath], with: .fade)
-
-            //        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+            
         }
      }
  
