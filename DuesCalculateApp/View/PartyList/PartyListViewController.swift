@@ -63,7 +63,7 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
         // #warning Incomplete implementation, return the number of rows
         
         // 通常は引数のセクションで分岐して値を返却する
-        return parties!.count
+        return parties?.count ?? 0
     }
     
 
@@ -75,7 +75,7 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
         
         cell.partyName?.text = parties?[indexPath.row].partyName
         cell.date?.text = parties?[indexPath.row].date
-        cell.partyId = (parties?[indexPath.row].partyId)!
+        cell.partyId = parties?[indexPath.row].partyId
      
         return cell
      }
