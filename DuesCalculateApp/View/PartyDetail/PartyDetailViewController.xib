@@ -19,16 +19,19 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KZz-Sv-BDS">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1sr-Qx-Syh" userLabel="Party Detail Table">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="522"/>
-                    <color key="backgroundColor" red="0.37854305360000001" green="0.41877861459999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                </view>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kmU-qn-qCT">
                     <rect key="frame" x="80" y="532" width="77" height="30"/>
                     <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <state key="normal" title="通知ボタン">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <connections>
+                        <action selector="warikanPush:" destination="-1" eventType="touchUpInside" id="1XK-J2-mqU"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gDq-ri-Bs4">
                     <rect key="frame" x="233" y="532" width="62" height="30"/>
@@ -37,6 +40,9 @@
                     <state key="normal" title="ワリカン">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <connections>
+                        <action selector="warikanPush:" destination="-1" eventType="touchUpInside" id="6i9-om-aN2"/>
+                    </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aig-li-gtE" userLabel="PartyInfoView">
                     <rect key="frame" x="0.0" y="572" width="375" height="95"/>
@@ -136,17 +142,17 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="KZz-Sv-BDS" secondAttribute="trailing" id="7Xb-zA-k2b"/>
-                <constraint firstItem="KZz-Sv-BDS" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="7y3-lp-tRm"/>
-                <constraint firstItem="kmU-qn-qCT" firstAttribute="top" secondItem="KZz-Sv-BDS" secondAttribute="bottom" constant="10" id="8iv-63-fKO"/>
-                <constraint firstItem="gDq-ri-Bs4" firstAttribute="top" secondItem="KZz-Sv-BDS" secondAttribute="bottom" constant="10" id="AI2-qF-ecS"/>
+                <constraint firstAttribute="trailing" secondItem="1sr-Qx-Syh" secondAttribute="trailing" id="1Po-3g-ECn"/>
+                <constraint firstItem="gDq-ri-Bs4" firstAttribute="top" secondItem="1sr-Qx-Syh" secondAttribute="bottom" constant="10" id="BF8-Ca-MfI"/>
+                <constraint firstItem="1sr-Qx-Syh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="DEq-gr-wLN"/>
                 <constraint firstItem="Aig-li-gtE" firstAttribute="top" secondItem="kmU-qn-qCT" secondAttribute="bottom" constant="10" id="GMH-Wc-NSY"/>
                 <constraint firstAttribute="trailing" secondItem="Aig-li-gtE" secondAttribute="trailing" id="GXL-ky-aeK"/>
                 <constraint firstItem="Aig-li-gtE" firstAttribute="top" secondItem="gDq-ri-Bs4" secondAttribute="bottom" constant="10" id="JbH-r0-hlX"/>
                 <constraint firstItem="Aig-li-gtE" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="U2k-Oy-ZLk"/>
                 <constraint firstAttribute="bottom" secondItem="Aig-li-gtE" secondAttribute="bottom" id="U9s-Z2-fz0"/>
+                <constraint firstItem="1sr-Qx-Syh" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="bJg-gb-JTD"/>
                 <constraint firstAttribute="trailing" secondItem="gDq-ri-Bs4" secondAttribute="trailing" constant="80" id="co5-YL-t1t"/>
-                <constraint firstItem="KZz-Sv-BDS" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="fDa-pw-4Tw"/>
+                <constraint firstItem="kmU-qn-qCT" firstAttribute="top" secondItem="1sr-Qx-Syh" secondAttribute="bottom" constant="10" id="fNs-UC-ezp"/>
                 <constraint firstItem="kmU-qn-qCT" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="80" id="g41-KG-aeP"/>
             </constraints>
             <point key="canvasLocation" x="34.5" y="54.5"/>
