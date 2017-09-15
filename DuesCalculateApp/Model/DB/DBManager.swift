@@ -12,6 +12,7 @@ final class DBManager {
     
     // 飲み会作成
     public func createParty(partyName: String, partyDate: String, totalAmount: Int) -> Bool {
+    public static func createParty(partyName: String, partyDate: String, totalAmount: Int) -> Bool {
         let realm = try! Realm()
         
         let party = Party()
@@ -27,21 +28,25 @@ final class DBManager {
     }
     
     func incrementID() -> Int {
+    private static func incrementID() -> Int {
         let realm = try! Realm()
         return (realm.objects(Party.self).max(ofProperty: "partyId") as Int? ?? 0) + 1
     }
     
     public func searchParty() -> [Party] {
+    public static func searchParty() -> [Party] {
         let realm = try! Realm()
         let party = realm.objects(Party.self)
         return Array(party)
     }
     
     public func deleteParty(partyId: Int) {
+    public static func deleteParty(partyId: Int) {
         let realm = try! Realm()
-        let party = realm.objects(Party.self)
+        let party = realm.objects(Party.self).filter("partyId == %@", partyId)
         try! realm.write {
             realm.delete(party[partyId])
+            realm.delete(party)
         }
         
     }
