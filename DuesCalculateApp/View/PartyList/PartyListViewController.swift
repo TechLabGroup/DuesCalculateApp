@@ -10,7 +10,7 @@ import RealmSwift
 
 class PartyListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var parties: [Party]!
+    var parties: [Party]?
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -24,7 +24,7 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
         let rigthItem =  UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: #selector(tapAddButton))
         self.navigationItem.rightBarButtonItem = rigthItem
         
-        parties = DBManager().searchParty()
+        parties = DBManager.searchParty()
         
         
         //自作セルをテーブルビューに登録する。
@@ -37,7 +37,7 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        parties = DBManager().searchParty()
+        parties = DBManager.searchParty()
         tableView.reloadData()
     }
     
@@ -48,7 +48,7 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     @objc private func tapEditButton(partyId: Int) {
-        let vc = PartyAddViewController()
+        let vc = PartyAddViewController(partyId: partyId)
         let nc = UINavigationController(rootViewController: vc)
         present(nc, animated: true, completion: nil)
         
@@ -70,7 +70,7 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
         // #warning Incomplete implementation, return the number of rows
         
         // 通常は引数のセクションで分岐して値を返却する
-        return parties.count
+        return parties?.count ?? 0
     }
     
 
@@ -82,9 +82,9 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
         let cell = tableView.dequeueReusableCell(withIdentifier: "PartyCell", for: indexPath) as! PartyTableViewCell
         
         
-        cell.partyName?.text = parties[indexPath.row].partyName
-        cell.date?.text = parties[indexPath.row].date
-        cell.partyId = parties[indexPath.row].partyId
+        cell.partyName?.text = parties?[indexPath.row].partyName
+        cell.date?.text = parties?[indexPath.row].date
+        cell.partyId = parties?[indexPath.row].partyId
 
 
 //        cell.textLabel?.text = object[indexPath.row].partyName
@@ -116,14 +116,21 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
         let cell = tableView.cellForRow(at: indexPath) as! PartyTableViewCell
 
         let deleteButton: UITableViewRowAction = UITableViewRowAction(style: .normal, title: "削除") {(_, indexPath) -> Void in
-            DBManager().deleteParty(partyId: cell.partyId)
-            self.parties = DBManager().searchParty()
+            guard let id = cell.partyId else {
+                return
+            }
+            DBManager.deleteParty(partyId: id)
+
+            self.parties = DBManager.searchParty()
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
         deleteButton.backgroundColor = UIColor.red
         
         let editButton: UITableViewRowAction = UITableViewRowAction(style: .normal, title: "編集") {(_, _) -> Void in
-            self.tapEditButton(partyId: cell.partyId)
+            guard let id = cell.partyId else {
+                return
+            }
+            self.tapEditButton(partyId: id)
         }
         editButton.backgroundColor = UIColor.blue
         return [deleteButton, editButton]

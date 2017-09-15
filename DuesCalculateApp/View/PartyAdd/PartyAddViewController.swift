@@ -10,24 +10,46 @@ import UIKit
 class PartyAddViewController: UIViewController {
 
     // MARK: - Properties
+    var editPartyId: Int?
 
     
     // MARK: - Initializer
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    init(partyId: Int) {
+        editPartyId = partyId
 
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    convenience init() {
+        self.init(nibName: nil, bundle: nil)
+    }
+
+    
     // MARK: - LyfeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // NavigationBarのタイトルを設定
         self.navigationItem.title = "飲み会作成"
-        
-//        self.inputPartyName.text = 
-
         // NavigationBarの左側に飲み会一覧に閉じるボタンを配置する
         let leftItem =  UIBarButtonItem(title: "閉じる", style: .plain, target: self, action: #selector(tapCloseButton))
         self.navigationItem.leftBarButtonItem = leftItem
         
+        if let id = editPartyId {
+            let party = DBManager.searchParty(partyId: id)
+            inputPartyName.text = party[0].partyName
+            inputPartyDate.text = party[0].date
+            inputTotalAmount.text = String(party[0].totalAmount)
+        }
+
     }
 
 
@@ -61,7 +83,6 @@ class PartyAddViewController: UIViewController {
         let totalAmount = Int(inputTotalAmount.text!)
         
         // todo: 精査後要修正
-        let _: Bool = DBManager().createParty(partyName: partyName!, partyDate: partyDate!, totalAmount: totalAmount!)
         let _: Bool = DBManager.createParty(partyName: partyName!, partyDate: partyDate!, totalAmount: totalAmount!)
         
         // ボタンをタップしたら画面を閉じる
