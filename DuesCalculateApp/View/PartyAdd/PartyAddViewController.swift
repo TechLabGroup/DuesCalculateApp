@@ -11,12 +11,18 @@ class PartyAddViewController: UIViewController {
 
     // MARK: - Properties
 
+    
+    // MARK: - Initializer
+    
+
     // MARK: - LyfeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // NavigationBarのタイトルを設定
         self.navigationItem.title = "飲み会作成"
+        
+//        self.inputPartyName.text = 
 
         // NavigationBarの左側に飲み会一覧に閉じるボタンを配置する
         let leftItem =  UIBarButtonItem(title: "閉じる", style: .plain, target: self, action: #selector(tapCloseButton))

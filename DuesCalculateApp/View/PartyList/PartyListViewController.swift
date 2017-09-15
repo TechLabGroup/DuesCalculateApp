@@ -47,6 +47,13 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
         present(nc, animated: true, completion: nil)
     }
     
+    @objc private func tapEditButton(partyId: Int) {
+        let vc = PartyAddViewController()
+        let nc = UINavigationController(rootViewController: vc)
+        present(nc, animated: true, completion: nil)
+        
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -103,34 +110,20 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
      */
     
     
-     // Override to support editing the table view.
-//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-//        if editingStyle == .delete {
-//            // Delete the row from the data sourc
-//        
-//            let cell = tableView.dequeueReusableCell(withIdentifier: "PartyCell", for: indexPath) as! PartyTableViewCell
-//            DBManager().deleteParty(partyId: cell.partyId)
-//            parties = DBManager().searchParty()
-//            tableView.deleteRows(at: [indexPath], with: .fade)
-//
-//            //        } else if editingStyle == .insert {
-//            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-//        }
-//     }
-    
+     // Override to support editing the table view
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         // supercedes -tableView:titleForDeleteConfirmationButtonForRowAtIndexPath: if return value is non-nil
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PartyCell", for: indexPath) as! PartyTableViewCell
-        
-        let deleteButton: UITableViewRowAction = UITableViewRowAction(style: .normal, title: "削除") {(action, indexPath) -> Void in
+        let cell = tableView.cellForRow(at: indexPath) as! PartyTableViewCell
+
+        let deleteButton: UITableViewRowAction = UITableViewRowAction(style: .normal, title: "削除") {(_, indexPath) -> Void in
             DBManager().deleteParty(partyId: cell.partyId)
             self.parties = DBManager().searchParty()
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
         deleteButton.backgroundColor = UIColor.red
         
-        let editButton: UITableViewRowAction = UITableViewRowAction(style: .normal, title: "編集") {(action, indexPath) -> Void in
-            self.tapAddButton()
+        let editButton: UITableViewRowAction = UITableViewRowAction(style: .normal, title: "編集") {(_, _) -> Void in
+            self.tapEditButton(partyId: cell.partyId)
         }
         editButton.backgroundColor = UIColor.blue
         return [deleteButton, editButton]
