@@ -10,6 +10,9 @@
 		0A420CFE1F57F05C007C8793 /* PartyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A420CFC1F57F05C007C8793 /* PartyTableViewCell.swift */; };
 		0A420CFF1F57F05C007C8793 /* PartyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A420CFD1F57F05C007C8793 /* PartyTableViewCell.xib */; };
 		0A6B7D021F45AF1D005F0A7A /* Party.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6B7D011F45AF1D005F0A7A /* Party.swift */; };
+		0B6595211F66A37A0099D159 /* PartyDetailMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6595201F66A37A0099D159 /* PartyDetailMember.swift */; };
+		0B6595241F66A75C0099D159 /* CustomMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6595221F66A75C0099D159 /* CustomMemberCell.swift */; };
+		0B6595251F66A75C0099D159 /* CustomMemberCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B6595231F66A75C0099D159 /* CustomMemberCell.xib */; };
 		44A7FAE24C560D26C6C9C0AF /* Pods_DuesCalculateApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77543815B95836050CD8E1E4 /* Pods_DuesCalculateApp.framework */; };
 		553503661F2763B9001593EB /* MemberSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553503641F2763B9001593EB /* MemberSelectViewController.swift */; };
 		553503671F2763B9001593EB /* MemberSelectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 553503651F2763B9001593EB /* MemberSelectViewController.xib */; };
@@ -31,6 +34,9 @@
 		0A420CFC1F57F05C007C8793 /* PartyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyTableViewCell.swift; sourceTree = "<group>"; };
 		0A420CFD1F57F05C007C8793 /* PartyTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PartyTableViewCell.xib; sourceTree = "<group>"; };
 		0A6B7D011F45AF1D005F0A7A /* Party.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Party.swift; sourceTree = "<group>"; };
+		0B6595201F66A37A0099D159 /* PartyDetailMember.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyDetailMember.swift; sourceTree = "<group>"; };
+		0B6595221F66A75C0099D159 /* CustomMemberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomMemberCell.swift; sourceTree = "<group>"; };
+		0B6595231F66A75C0099D159 /* CustomMemberCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomMemberCell.xib; sourceTree = "<group>"; };
 		19C681F931B085CDB15B8D74 /* Pods-DuesCalculateApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DuesCalculateApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-DuesCalculateApp/Pods-DuesCalculateApp.release.xcconfig"; sourceTree = "<group>"; };
 		553503641F2763B9001593EB /* MemberSelectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberSelectViewController.swift; sourceTree = "<group>"; };
 		553503651F2763B9001593EB /* MemberSelectViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MemberSelectViewController.xib; sourceTree = "<group>"; };
@@ -101,6 +107,8 @@
 			children = (
 				553503701F2763FB001593EB /* PartyDetailViewController.swift */,
 				553503711F2763FB001593EB /* PartyDetailViewController.xib */,
+				0B6595221F66A75C0099D159 /* CustomMemberCell.swift */,
+				0B6595231F66A75C0099D159 /* CustomMemberCell.xib */,
 			);
 			path = PartyDetail;
 			sourceTree = "<group>";
@@ -136,6 +144,7 @@
 			children = (
 				0A6B7D011F45AF1D005F0A7A /* Party.swift */,
 				5566B3AA1F27627A00ADED40 /* DBManager.swift */,
+				0B6595201F66A37A0099D159 /* PartyDetailMember.swift */,
 			);
 			path = DB;
 			sourceTree = "<group>";
@@ -251,6 +260,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B6595251F66A75C0099D159 /* CustomMemberCell.xib in Resources */,
 				55A1CAE31F20ECAC00BF0635 /* LaunchScreen.storyboard in Resources */,
 				55A1CAE01F20ECAC00BF0635 /* Assets.xcassets in Resources */,
 				0A420CFF1F57F05C007C8793 /* PartyTableViewCell.xib in Resources */,
@@ -338,7 +348,9 @@
 				553503761F276408001593EB /* PartyListViewController.swift in Sources */,
 				553503721F2763FB001593EB /* PartyDetailViewController.swift in Sources */,
 				5566B3AB1F27627A00ADED40 /* DBManager.swift in Sources */,
+				0B6595211F66A37A0099D159 /* PartyDetailMember.swift in Sources */,
 				0A6B7D021F45AF1D005F0A7A /* Party.swift in Sources */,
+				0B6595241F66A75C0099D159 /* CustomMemberCell.swift in Sources */,
 				55A1CAD91F20ECAC00BF0635 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
