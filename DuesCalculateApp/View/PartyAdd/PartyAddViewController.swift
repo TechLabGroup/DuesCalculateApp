@@ -43,11 +43,16 @@ class PartyAddViewController: UIViewController {
         let leftItem =  UIBarButtonItem(title: "閉じる", style: .plain, target: self, action: #selector(tapCloseButton))
         self.navigationItem.leftBarButtonItem = leftItem
         
+        // 金額項目を数値入力のみに制限
+        inputTotalAmount.keyboardType = UIKeyboardType.numberPad
+        
+        // 編集ボタン押下時の挙動
         if let id = editPartyId {
             let party = DBManager.searchParty(partyId: id)
             inputPartyName.text = party[0].partyName
             inputPartyDate.text = party[0].date
             inputTotalAmount.text = String(party[0].totalAmount)
+            buttonRegister.setTitle("更新する", for: UIControlState.normal)
         }
 
     }
@@ -82,9 +87,13 @@ class PartyAddViewController: UIViewController {
         // todo: 精査後要修正
         let totalAmount = Int(inputTotalAmount.text!)
         
-        // todo: 精査後要修正
-        let _: Bool = DBManager.createParty(partyName: partyName!, partyDate: partyDate!, totalAmount: totalAmount!)
-        
+        // 編集ボタン押下時の挙動
+        if let id = editPartyId {
+            let _: Bool = DBManager.updateParty(partyId: id, partyName: partyName!, partyDate: partyDate!, totalAmount: totalAmount!)
+        } else {
+            // todo: 精査後要修正
+            let _: Bool = DBManager.createParty(partyName: partyName!, partyDate: partyDate!, totalAmount: totalAmount!)
+        }
         // ボタンをタップしたら画面を閉じる
         dismiss(animated: true, completion: nil)
     }

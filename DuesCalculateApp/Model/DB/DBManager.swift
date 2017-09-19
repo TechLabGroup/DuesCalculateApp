@@ -52,4 +52,19 @@ final class DBManager {
         
     }
     
+    public static func updateParty(partyId: Int, partyName: String, partyDate: String, totalAmount: Int) -> Bool {
+        let realm = try! Realm()
+        let party = realm.objects(Party.self).filter("partyId == %@", partyId)
+        if let update = party.first {
+            try! realm.write {
+                update.partyName = partyName
+                update.date = partyDate
+                update.totalAmount = totalAmount
+            }
+            return true
+        }
+        return false
+    }
+
+    
 }
