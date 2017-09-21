@@ -11,6 +11,7 @@ class PartyAddViewController: UIViewController {
 
     // MARK: - Properties
     var editPartyId: Int?
+    var toolBar: UIToolbar!
 
     
     // MARK: - Initializer
@@ -46,6 +47,13 @@ class PartyAddViewController: UIViewController {
         // 金額項目を数値入力のみに制限
         inputTotalAmount.keyboardType = UIKeyboardType.numberPad
         
+        //datepicker上のtoolbarのdoneボタン
+        toolBar = UIToolbar()
+        toolBar.sizeToFit()
+        let toolBarBtn = UIBarButtonItem(title: "完了", style: .plain, target: self, action: #selector(doneBtn))
+        toolBar.items = [toolBarBtn]
+        inputPartyDate.inputAccessoryView = toolBar
+        
         // 編集ボタン押下時の挙動
         if let id = editPartyId {
             let party = DBManager.searchParty(partyId: id)
@@ -57,7 +65,6 @@ class PartyAddViewController: UIViewController {
 
     }
 
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -66,6 +73,18 @@ class PartyAddViewController: UIViewController {
     // MARK: - private method
     @objc private func tapCloseButton() {
         dismiss(animated: true, completion: nil)
+    }
+    
+    //datepickerが選択されたらtextfieldに表示
+    @objc private func datePickerValueChanged(sender: UIDatePicker) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat  = "yyyy/MM/dd"
+        inputPartyDate.text = dateFormatter.string(from: sender.date)
+    }
+    
+    //toolbarのdoneボタン
+    @objc private func doneBtn() {
+        inputPartyDate.resignFirstResponder()
     }
 
     // todo 入力値精査
@@ -80,6 +99,14 @@ class PartyAddViewController: UIViewController {
 
     @IBOutlet weak var buttonRegister: UIButton!
     
+    // MARK: - IBAction
+    @IBAction func inputDateEditing(_ sender: UITextField) {
+        let datePickerView: UIDatePicker = UIDatePicker()
+        datePickerView.datePickerMode = UIDatePickerMode.date
+        datePickerView.locale = Locale(identifier: "ja_JP")
+        sender.inputView = datePickerView
+        datePickerView.addTarget(self, action: #selector(datePickerValueChanged), for: UIControlEvents.valueChanged)
+    }
     @IBAction func tapRegisterButton(_ sender: Any) {
         let partyName = inputPartyName.text
         let partyDate = inputPartyDate.text
