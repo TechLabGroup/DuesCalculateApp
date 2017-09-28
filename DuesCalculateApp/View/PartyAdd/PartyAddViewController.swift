@@ -10,7 +10,7 @@ import UIKit
 class PartyAddViewController: UIViewController {
 
     // MARK: - Properties
-    var editPartyId: Int?
+    private var editPartyId: Int?
 
     
     // MARK: - Initializer
@@ -64,6 +64,7 @@ class PartyAddViewController: UIViewController {
     }
     
     // MARK: - private method
+    /// 閉じるボタンタップ時にモーダル解除
     @objc private func tapCloseButton() {
         dismiss(animated: true, completion: nil)
     }
@@ -80,6 +81,10 @@ class PartyAddViewController: UIViewController {
 
     @IBOutlet weak var buttonRegister: UIButton!
     
+    /// 登録ボタンタップ時の挙動
+    /// 登録ボタンをタップした場合は飲み会を新規作成
+    /// 更新ボタンをタップした場合は飲み会を編集
+    /// - Parameter sender: begin edit
     @IBAction func tapRegisterButton(_ sender: Any) {
         let partyName = inputPartyName.text
         let partyDate = inputPartyDate.text

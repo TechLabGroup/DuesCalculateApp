@@ -41,12 +41,17 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
         tableView.reloadData()
     }
     
+    ///＋ボタンタップ時の遷移先定義
     @objc private func tapAddButton() {
         let vc = PartyAddViewController()
         let nc = UINavigationController(rootViewController: vc)
         present(nc, animated: true, completion: nil)
     }
     
+    
+    /// 編集ボタンタップ時の遷移先定義
+    ///
+    /// - Parameter partyId: 編集対象の飲み会ID
     @objc private func tapEditButton(partyId: Int) {
         let vc = PartyAddViewController(partyId: partyId)
         let nc = UINavigationController(rootViewController: vc)
@@ -115,7 +120,7 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
         // supercedes -tableView:titleForDeleteConfirmationButtonForRowAtIndexPath: if return value is non-nil
         let cell = tableView.cellForRow(at: indexPath) as! PartyTableViewCell
 
-        let deleteButton: UITableViewRowAction = UITableViewRowAction(style: .normal, title: "削除") {(_, indexPath) -> Void in
+        let deleteButton = UITableViewRowAction(style: .normal, title: "削除") {(_, indexPath) -> Void in
             guard let id = cell.partyId else {
                 return
             }
@@ -124,15 +129,15 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
             self.parties = DBManager.searchParty()
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
-        deleteButton.backgroundColor = UIColor.red
+        deleteButton.backgroundColor = .red
         
-        let editButton: UITableViewRowAction = UITableViewRowAction(style: .normal, title: "編集") {(_, _) -> Void in
+        let editButton = UITableViewRowAction(style: .normal, title: "編集") {(_, _) -> Void in
             guard let id = cell.partyId else {
                 return
             }
             self.tapEditButton(partyId: id)
         }
-        editButton.backgroundColor = UIColor.blue
+        editButton.backgroundColor = .blue
         return [deleteButton, editButton]
     }
 
