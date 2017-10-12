@@ -114,18 +114,20 @@ class PartyAddViewController: UIViewController {
     /// 更新ボタンをタップした場合は飲み会を編集
     /// - Parameter sender: begin edit
     @IBAction func tapRegisterButton(_ sender: Any) {
-        let partyName = inputPartyName.text
-        let partyDate = inputPartyDate.text
-        
-        // todo: 精査後要修正
-        let totalAmount = Int(inputTotalAmount.text!)
+  
+        guard let partyName = inputPartyName.text,
+            let partyDate = inputPartyDate.text,
+            let inputTotalAmount = inputTotalAmount.text,
+            let totalAmount = Int(inputTotalAmount) else {
+                return
+        }
         
         // 編集ボタン押下時の挙動
         if let id = editPartyId {
-            let _: Bool = DBManager.updateParty(partyId: id, partyName: partyName!, partyDate: partyDate!, totalAmount: totalAmount!)
+            let _: Bool = DBManager.updateParty(partyId: id, partyName: partyName, partyDate: partyDate, totalAmount: totalAmount)
         } else {
             // todo: 精査後要修正
-            let _: Bool = DBManager.createParty(partyName: partyName!, partyDate: partyDate!, totalAmount: totalAmount!)
+            let _: Bool = DBManager.createParty(partyName: partyName, partyDate: partyDate, totalAmount: totalAmount)
         }
         // ボタンをタップしたら画面を閉じる
         dismiss(animated: true, completion: nil)
