@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,10 +20,13 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Tb-BE-Gle" userLabel="アイコン">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="s30.png" translatesAutoresizingMaskIntoConstraints="NO" id="4Tb-BE-Gle" userLabel="icon">
                         <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="4Tb-BE-Gle" secondAttribute="height" multiplier="1:1" id="mjc-te-dBy"/>
+                        </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="¥3,500" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zo9-yY-sqy" userLabel="金額">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="¥3,500" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zo9-yY-sqy" userLabel="price">
                         <rect key="frame" x="190.5" y="13" width="55.5" height="17.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
@@ -30,9 +34,12 @@
                     </label>
                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dXa-p5-lgR">
                         <rect key="frame" x="261" y="5" width="51" height="33.5"/>
+                        <connections>
+                            <action selector="changeCellColor:" destination="KGk-i7-Jjw" eventType="valueChanged" id="6rE-F0-FyA"/>
+                        </connections>
                     </switch>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="藤井隆司" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dh7-lP-GQA" userLabel="氏名">
-                        <rect key="frame" x="99" y="18" width="42" height="7.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="testuser" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dh7-lP-GQA" userLabel="name">
+                        <rect key="frame" x="59" y="18" width="63" height="8"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -53,6 +60,17 @@
                     <constraint firstItem="dXa-p5-lgR" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="zKC-5z-nbN"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="icon" destination="4Tb-BE-Gle" id="vBF-vS-XNT"/>
+                <outlet property="memberCell" destination="H2p-sc-9uM" id="iSt-Y1-Oyk"/>
+                <outlet property="name" destination="Dh7-lP-GQA" id="utA-4c-k1v"/>
+                <outlet property="price" destination="zo9-yY-sqy" id="Oxz-WO-4pr"/>
+                <outlet property="sw" destination="dXa-p5-lgR" id="XNq-Av-1MX"/>
+            </connections>
+            <point key="canvasLocation" x="527" y="-137"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="s30.png" width="600" height="600"/>
+    </resources>
 </document>
