@@ -53,6 +53,7 @@ class PartyAddViewController: UIViewController {
         let toolBarBtn = UIBarButtonItem(title: "完了", style: .plain, target: self, action: #selector(doneBtn))
         toolBar.items = [toolBarBtn]
         inputPartyDate.inputAccessoryView = toolBar
+        inputTotalAmount.inputAccessoryView = toolBar
         
         // 編集ボタン押下時の挙動
         if let id = editPartyId {
@@ -86,6 +87,7 @@ class PartyAddViewController: UIViewController {
     //toolbarのdoneボタン
     @objc private func doneBtn() {
         inputPartyDate.resignFirstResponder()
+        inputTotalAmount.resignFirstResponder()
     }
 
     // todo 入力値精査
