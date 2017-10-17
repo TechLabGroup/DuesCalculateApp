@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MemberSelectViewController" customModule="DuesCalculateApp" customModuleProvider="target">
             <connections>
+                <outlet property="tableView" destination="ekv-9b-z0h" id="QI3-Ea-SuX"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
