@@ -22,7 +22,7 @@ class MoneyInputViewController: UIViewController {
     var selectPartyId: Int?
     
     // 編集対象のシリアルNo
-    var editSerialId: Int?
+    var editSerialNo: Int?
     
     // MARK: - Initializer
     required init?(coder aDecoder: NSCoder) {
@@ -40,8 +40,8 @@ class MoneyInputViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
-    init(serialNo: Int, editMember: String, amount: Int) {
-        editSerialId = serialNo
+    init(serialNo: Int) {
+        editSerialNo = serialNo
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -56,18 +56,21 @@ class MoneyInputViewController: UIViewController {
         // NavigationBarのタイトルを設定
         self.navigationItem.title = "金額入力"
         
-        
-        
-        
-        
-        
-        cheakMember.numberOfLines = selectMember.count
-        
-        for index in selectMember.keys {
-            name += selectMember[index]! + "\n"
+        // 編集ボタン押下時の挙動
+        if let no = editSerialNo {
+            let member = DBManager.searchMember(serialNo: no)
+            cheakMember.text = member[0].name
+            inputAmount.text = String(member[0].paymentAmount)
+            buttonRegister.setTitle("更新する", for: UIControlState.normal)
+        } else {
+            cheakMember.numberOfLines = selectMember.count
+            
+            for index in selectMember.keys {
+                name += selectMember[index]! + "\n"
+            }
+            
+            cheakMember.text = name
         }
-        
-        cheakMember.text = name
 
         // Do any additional setup after loading the view.
     }
@@ -79,17 +82,24 @@ class MoneyInputViewController: UIViewController {
     
     @IBOutlet weak var inputAmount: UITextField!
     
+    @IBOutlet weak var buttonRegister: UIButton!
     
     // 登録するボタン押下時の処理
     @IBAction func TapInsertButton(_ sender: Any) {
         
         let amount = Int(inputAmount.text!)
         
-        for index in selectMember.keys {
-            // 選択した人数分登録処理を実施
-            let _: Bool = DBManager.createPartyDetail(partyId: selectPartyId!, name: selectMember[index]!, mailAddress: "test@tis.co.jp", amount: amount!)
+        // 編集ボタン押下時の挙動
+        if let no = editSerialNo {
+            let _: Bool = DBManager.updateMember(serialNo: no, amount: amount!)
+        } else {
+            
+            for index in selectMember.keys {
+                // 選択した人数分登録処理を実施
+                let _: Bool = DBManager.createPartyDetail(partyId: selectPartyId!, name: selectMember[index]!, mailAddress: "test@tis.co.jp", amount: amount!)
+            }
         }
-        
+        // ボタンをタップ
         let vc = PartyDetailViewController()
         let nc = UINavigationController(rootViewController: vc)
         present(nc, animated: true, completion: nil)

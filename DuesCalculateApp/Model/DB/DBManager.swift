@@ -130,4 +130,32 @@ final class DBManager {
         return (realm.objects(PartyDetailMember.self).max(ofProperty: "serialNo") as Int? ?? 0) + 1
     }
     
+    /// 参加者検索
+    ///
+    /// - Parameter serialNo: 対象のシリアルNo
+    /// - Returns: 該当する参加者
+    public static func searchMember(serialNo: Int) -> [PartyDetailMember] {
+        let realm = try! Realm()
+        let party = realm.objects(PartyDetailMember.self).filter("serialNo == %@", serialNo)
+        return Array(party)
+    }
+    
+    /// 参加者更新
+    ///
+    /// - Parameters:
+    ///   - serialNo: 対象のシリアルNo
+    ///   - amount: 金額
+    /// - Returns: 更新結果
+    public static func updateMember(serialNo: Int, amount: Int) -> Bool {
+        let realm = try! Realm()
+        let member = realm.objects(PartyDetailMember.self).filter("serialNo == %@", serialNo)
+        if let update = member.first {
+            try! realm.write {
+                update.paymentAmount = amount
+            }
+            return true
+        }
+        return false
+    }
+    
 }

@@ -107,7 +107,7 @@ class MemberSelectViewController: UIViewController, UITableViewDelegate, UITable
     
     // 金額入力ボタン押下時の遷移先定義
     @IBAction func tapMoneyInputButton(_ sender: Any) {
-        let vc = MoneyInputViewController(partyId:selectPartyId!, addMember:addMember)
+        let vc = MoneyInputViewController(partyId: selectPartyId!, addMember: addMember)
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
