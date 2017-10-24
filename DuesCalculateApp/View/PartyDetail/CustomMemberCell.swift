@@ -7,9 +7,13 @@
 //
 
 import UIKit
+protocol cellaction {
+    func changeCellColor(swisOn: Bool, memberCell: UIView)
+}
 
-class CustomMemberCell: UITableViewCell  {
-
+class CustomMemberCell: UITableViewCell {
+    
+    var delegate: cellaction!
     
     // MARK: - IBOutlets
     @IBOutlet weak var icon: UIImageView!
@@ -17,36 +21,20 @@ class CustomMemberCell: UITableViewCell  {
     @IBOutlet weak var memberCell: UIView!
     @IBOutlet weak var price: UILabel!
     @IBOutlet weak var sw: UISwitch!
+    
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
-    /// <#Description#>
+    
     /// セルの背景色を変更
     ///
     /// - Parameter sender: <#sender description#>
     @IBAction func changeCellColor(_ sender: UISwitch) {
-        if sw.isOn {
-            memberCell.backgroundColor = UIColor.gray
-        } else {
-            memberCell.backgroundColor = UIColor.white
-        }
-        
-    }
-    
+        let swisOn: Bool = sw.isOn
+        delegate.changeCellColor(swisOn: swisOn, memberCell: memberCell)
 
-//    
-//    /// <#Description#>
-//    ///
-//    ///
-//    /// - Parameters:
-//    ///   - selected: <#selected description#>
-//    ///   - animated: <#animated description#>
-//    override func setSelected(_ selected: Bool, animated: Bool) {
-//        super.setSelected(selected, animated: animated)
-//
-//        // Configure the view for the selected state
-//    }
+    }
     
 }

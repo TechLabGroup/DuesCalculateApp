@@ -10,7 +10,6 @@ import RealmSwift
 
 final class DBManager {
     
-    /// <#Description#>
     /// 飲み会作成
     ///
     /// - Parameters:
@@ -33,7 +32,6 @@ final class DBManager {
         return true
     }
     
-    /// <#Description#>
     /// メンバー登録
     ///
     /// - Parameters:
@@ -59,7 +57,6 @@ final class DBManager {
         return true
     }
     
-    /// <#Description#>
     /// partyIdのシーケンス
     ///
     /// - Returns: <#return value description#>
@@ -68,17 +65,16 @@ final class DBManager {
         return (realm.objects(Party.self).max(ofProperty: "partyId") as Int? ?? 0) + 1
     }
     
-    /// <#Description#>
-    /// 飲み会一覧検索
+    //// 飲み会検索
     ///
-    /// - Returns: <#return value description#>
-    public static func searchParty() -> [Party] {
+    /// - Parameter partyId: 対象の飲み会ID
+    /// - Returns: 該当する飲み会
+    public static func searchParty(partyId: Int) -> [Party] {
         let realm = try! Realm()
-        let party = realm.objects(Party.self)
+        let party = realm.objects(Party.self).filter("partyId == %@", partyId)
         return Array(party)
     }
     
-    /// <#Description#>
     /// 飲み会名称検索
     ///
     /// - Parameter partyId: <#partyId description#>
@@ -93,19 +89,17 @@ final class DBManager {
         return partyName
     }
     
-    /// <#Description#>
     /// 飲み会参加者一覧検索
     ///
     /// - Parameter partyId: <#partyId description#>
     /// - Returns: <#return value description#>
-    public static func searchAllMember(partyId : Int) -> [Member] {
+    public static func searchAllMember(partyId: Int) -> [Member] {
         let realm = try! Realm()
         let member = realm.objects(Member.self).filter("partyId == %@", partyId)
         return Array(member)
     }
     
     
-    /// <#Description#>
     /// 支払い完了フラグに更新
     ///
     /// - Parameters:
@@ -119,7 +113,6 @@ final class DBManager {
             member?.paymentCompleteFlag = 1 })
     }
     
-    /// <#Description#>
     /// 支払い完了フラグを解除
     ///
     /// - Parameters:
@@ -133,10 +126,30 @@ final class DBManager {
             member?.paymentCompleteFlag = 0 })
     }
     
-    //合計金額
 
+    /// 支払い完了フラグ更新
+    ///
+    /// - Parameters:
+    ///   - partyId: 飲み会ID
+    ///   - paymentCompleteFlag: 支払い完了フラグ
+    /// - Returns: return value description
+    public static func updatePaymentCompFlg(partyId: Int, paymentCompleteFlag: Int) -> Bool {
+        let realm = try! Realm()
+        let party = realm.objects(Member.self).filter("partyId == %@", partyId)
+        if let update = party.first {
+            try! realm.write {
+                if paymentCompleteFlag == 0 {
+                    update.paymentCompleteFlag = 1
+                } else {
+                    update.paymentCompleteFlag = 0
+                }
+            }
+            return true
+        }
+        return false
+    }
     
-    //集計金額
+
     
     //残り人数
     
