@@ -65,7 +65,7 @@ final class DBManager {
         }
         return true
     }
-    
+
     
     /// 飲み会一覧検索
     ///
@@ -76,6 +76,17 @@ final class DBManager {
         return Array(party)
     }
     
+    //// 飲み会検索
+    ///
+    /// - Parameter partyId: 対象の飲み会ID
+    /// - Returns: 該当する飲み会
+    public static func searchParty(partyId: Int) -> [Party] {
+        let realm = try! Realm()
+        let party = realm.objects(Party.self).filter("partyId == %@", partyId)
+        return Array(party)
+    }
+    
+
     /// 飲み会検索
     ///
     /// - Parameter partyId: 対象の飲み会ID
@@ -141,7 +152,7 @@ final class DBManager {
     ///
     /// - Parameter partyId: <#partyId description#>
     /// - Returns: <#return value description#>
-    public static func searchAllMember(partyId : Int) -> [Member] {
+    public static func searchAllMember(partyId: Int) -> [Member] {
         let realm = try! Realm()
         let member = realm.objects(Member.self).filter("partyId == %@", partyId)
         return Array(member)
@@ -173,5 +184,29 @@ final class DBManager {
         try! realm.write ({ () -> Void in
             member?.paymentCompleteFlag = 0 })
     }
+    
+    /// 支払い完了フラグ更新
+    ///
+    /// - Parameters:
+    ///   - partyId: 飲み会ID
+    ///   - paymentCompleteFlag: 支払い完了フラグ
+    /// - Returns: return value description
+    public static func updatePaymentCompFlg(partyId: Int, paymentCompleteFlag: Int) -> Bool {
+        let realm = try! Realm()
+        let party = realm.objects(Member.self).filter("partyId == %@", partyId)
+        if let update = party.first {
+            try! realm.write {
+                if paymentCompleteFlag == 0 {
+                    update.paymentCompleteFlag = 1
+                } else {
+                    update.paymentCompleteFlag = 0
+                }
+            }
+            return true
+        }
+        return false
+    }
+    
+
     
 }
