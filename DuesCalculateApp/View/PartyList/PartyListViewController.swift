@@ -6,26 +6,57 @@
 //
 
 import UIKit
+import RealmSwift
 
 class PartyListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
+    
+    var parties: [Party]?
+    
+    @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // NavigationBarのタイトルを設定
         self.navigationItem.title = "飲み会一覧"
         
-        // NavigationBarの右側に+ボランを配置する
+        // NavigationBarの右側に+ボタンを配置する
         let rigthItem =  UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: #selector(tapAddButton))
         self.navigationItem.rightBarButtonItem = rigthItem
-    }
+        
+        parties = DBManager.searchParty()
+        
+        
+        //自作セルをテーブルビューに登録する。
+        let partyCell = UINib(nibName: "PartyTableViewCell", bundle: nil)
+        tableView.register(partyCell, forCellReuseIdentifier: "PartyCell")
+        
 
-    func tapAddButton() {
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        parties = DBManager.searchParty()
+        tableView.reloadData()
+    }
+    
+    ///＋ボタンタップ時の遷移先定義
+    @objc private func tapAddButton() {
         let vc = PartyAddViewController()
         let nc = UINavigationController(rootViewController: vc)
         present(nc, animated: true, completion: nil)
+    }
     
     
+    /// 編集ボタンタップ時の遷移先定義
+    ///
+    /// - Parameter partyId: 編集対象の飲み会ID
+    @objc private func tapEditButton(partyId: Int) {
+        let vc = PartyAddViewController(partyId: partyId)
+        let nc = UINavigationController(rootViewController: vc)
+        present(nc, animated: true, completion: nil)
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -35,7 +66,6 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
     
     
     // MARK: - Table view data source
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -45,15 +75,24 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
         // #warning Incomplete implementation, return the number of rows
         
         // 通常は引数のセクションで分岐して値を返却する
-        return 3
+        return parties?.count ?? 0
     }
     
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        // let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-        let cell = UITableViewCell()
+       // let cell = UITableViewCell()
         
-        cell.textLabel?.text = "新人歓迎会"
+        //セルを取得する。
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PartyCell", for: indexPath) as! PartyTableViewCell
+        
+        
+        cell.partyName?.text = parties?[indexPath.row].partyName
+        cell.date?.text = parties?[indexPath.row].date
+        cell.partyId = parties?[indexPath.row].partyId
+
+
+//        cell.textLabel?.text = object[indexPath.row].partyName
 
      // Configure the cell...
      
@@ -63,8 +102,9 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = PartyDetailViewController()
         navigationController?.pushViewController(vc, animated: true)
-    
+    	
     }
+
     
     /*
      // Override to support conditional editing of the table view.
@@ -74,17 +114,33 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
      }
      */
     
-    /*
-     // Override to support editing the table view.
-     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-     if editingStyle == .delete {
-     // Delete the row from the data source
-     tableView.deleteRows(at: [indexPath], with: .fade)
-     } else if editingStyle == .insert {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-     }
-     }
-     */
+    
+     // Override to support editing the table view
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        // supercedes -tableView:titleForDeleteConfirmationButtonForRowAtIndexPath: if return value is non-nil
+        let cell = tableView.cellForRow(at: indexPath) as! PartyTableViewCell
+
+        let deleteButton = UITableViewRowAction(style: .normal, title: "削除") {(_, indexPath) -> Void in
+            guard let id = cell.partyId else {
+                return
+            }
+            DBManager.deleteParty(partyId: id)
+
+            self.parties = DBManager.searchParty()
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+        deleteButton.backgroundColor = .red
+        
+        let editButton = UITableViewRowAction(style: .normal, title: "編集") {(_, _) -> Void in
+            guard let id = cell.partyId else {
+                return
+            }
+            self.tapEditButton(partyId: id)
+        }
+        editButton.backgroundColor = .blue
+        return [deleteButton, editButton]
+    }
+
     
     /*
      // Override to support rearranging the table view.
