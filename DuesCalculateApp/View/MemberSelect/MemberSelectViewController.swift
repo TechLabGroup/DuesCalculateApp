@@ -23,16 +23,34 @@ class MemberSelectViewController: UIViewController, UITableViewDelegate, UITable
     // 飲み会ID
     var selectPartyId: Int?
     
+    // MARK: - IBOutlet
     @IBOutlet weak var tableView: UITableView!
     
+    // MARK: - Initializer
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    init(partyId: Int) {
+        selectPartyId = partyId
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    convenience init() {
+        self.init(nibName: nil, bundle: nil)
+    }
+    
+    // MARK: - LyfeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // NavigationBarのタイトルを設定
         self.navigationItem.title = "精算者選択"
-        
-        // 飲み会IDを仮設定
-        selectPartyId = 0001
 
         //自作セルをテーブルビューに登録する。
         let memberCell = UINib(nibName: "MemberTableViewCell", bundle: nil)
@@ -44,36 +62,35 @@ class MemberSelectViewController: UIViewController, UITableViewDelegate, UITable
         
         let status = CNContactStore.authorizationStatus(for: CNEntityType.contacts)
         
-        switch (status) {
+        switch status {
             
         // まだダイアログから選択を行っていない または　ペアレンタルコントロールや、機能制限によりアクセス不可
-        case CNAuthorizationStatus.notDetermined,CNAuthorizationStatus.restricted:
+        case CNAuthorizationStatus.notDetermined, CNAuthorizationStatus.restricted:
             
             // このアプリが連絡先を使ってもいいかをユーザーが選択していない場合に、連絡先の使用を許可するか禁止するかを選択するメッセージボックスを表示
-            // クロージャー内、循環参照によるメモリーリークに注意！
             let store = CNContactStore.init()
-            store.requestAccess(for: CNEntityType.contacts, completionHandler: { (granted, Error) in
+            store.requestAccess(for: CNEntityType.contacts, completionHandler: { (granted, _) in
                 
                 // 利用可能
                 if granted {
                     
-                    // クロージャー内の処理なのでメッセージを表示する等、画面に関連する処理を行う場合はメインスレッドで処理を行うようにしましょう
+                    // クロージャー内の処理なのでメッセージを表示する等、画面に関連する処理を行う場合はメインスレッドで処理を行うようにする
                     DispatchQueue.main.async {
                     }
                     
                     // 利用不可能
                 } else {
                     
-                    // クロージャー内の処理なのでメッセージを表示する等、画面に関連する処理を行う場合はメインスレッドで処理を行うようにしましょう
+                    // クロージャー内の処理なのでメッセージを表示する等、画面に関連する処理を行う場合はメインスレッドで処理を行うようにする
                     DispatchQueue.main.async {
                     }
                 }
             })
             
-        // 拒否が選択されている
+        // 拒否が選択されている場合の処理
         case CNAuthorizationStatus.denied: break
             
-        // 利用可能
+        // 利用可能な場合の処理
         case CNAuthorizationStatus.authorized: break
             
         }
@@ -82,18 +99,16 @@ class MemberSelectViewController: UIViewController, UITableViewDelegate, UITable
             // 連絡先データベースからここでは苗字・名前・電話番号情報を取得
             try store.enumerateContacts(with: CNContactFetchRequest(keysToFetch: [CNContactGivenNameKey as CNKeyDescriptor,
                                                                                   CNContactFamilyNameKey as CNKeyDescriptor,
-                                                                                  CNContactPhoneNumbersKey as CNKeyDescriptor])) {
-                (contact, cursor) -> Void in
+                                                                                  CNContactPhoneNumbersKey as CNKeyDescriptor])) { (contact, _) -> Void in
                                                                                     
                 // 電話番号が保持されている連絡先だったら
-                if (!contact.phoneNumbers.isEmpty){
+                if !contact.phoneNumbers.isEmpty {
                                                                                         
                 // 取得したデータをpeople に収める
                 self.people.append(contact)
                 }
             }
-        }
-        catch {
+        } catch {
             print("連絡先データの取得に失敗しました")
         }
         
@@ -128,8 +143,6 @@ class MemberSelectViewController: UIViewController, UITableViewDelegate, UITable
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        //TODO セルにプライベート変数を定義して、アドレス帳の情報を裏で保持するようにしておく
         
         // セルを取得する
         let cell = tableView.dequeueReusableCell(withIdentifier: "MemberCell", for: indexPath) as! MemberTableViewCell

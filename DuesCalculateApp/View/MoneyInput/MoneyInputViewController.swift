@@ -50,19 +50,21 @@ class MoneyInputViewController: UIViewController {
         self.init(nibName: nil, bundle: nil)
     }
 
+    // MARK: - LyfeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // NavigationBarのタイトルを設定
         self.navigationItem.title = "金額入力"
         
-        // 編集ボタン押下時の挙動
         if let no = editSerialNo {
+            // 編集ボタン押下時の挙動
             let member = DBManager.searchMember(serialNo: no)
             cheakMember.text = member[0].name
             inputAmount.text = String(member[0].paymentAmount)
             buttonRegister.setTitle("更新する", for: UIControlState.normal)
         } else {
+            // 金額入力ボタン押下時の挙動
             cheakMember.numberOfLines = selectMember.count
             
             for index in selectMember.keys {
@@ -80,6 +82,7 @@ class MoneyInputViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    // MARK: - IBOutlet
     @IBOutlet weak var inputAmount: UITextField!
     
     @IBOutlet weak var buttonRegister: UIButton!
@@ -89,17 +92,17 @@ class MoneyInputViewController: UIViewController {
         
         let amount = Int(inputAmount.text!)
         
-        // 編集ボタン押下時の挙動
         if let no = editSerialNo {
+            // 更新するボタン押下時の挙動
             let _: Bool = DBManager.updateMember(serialNo: no, amount: amount!)
         } else {
-            
+            // 登録するボタン押下時の挙動
             for index in selectMember.keys {
                 // 選択した人数分登録処理を実施
                 let _: Bool = DBManager.createPartyDetail(partyId: selectPartyId!, name: selectMember[index]!, mailAddress: "test@tis.co.jp", amount: amount!)
             }
         }
-        // ボタンをタップ
+        // ボタンをタップしたら飲み会詳細画面に遷移
         let vc = PartyDetailViewController()
         let nc = UINavigationController(rootViewController: vc)
         present(nc, animated: true, completion: nil)
