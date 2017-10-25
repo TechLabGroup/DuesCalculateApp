@@ -87,16 +87,6 @@ final class DBManager {
     }
     
 
-    /// 飲み会検索
-    ///
-    /// - Parameter partyId: 対象の飲み会ID
-    /// - Returns: 該当する飲み会
-    public static func searchParty(partyId: Int) -> [Party] {
-        let realm = try! Realm()
-        let party = realm.objects(Party.self).filter("partyId == %@", partyId)
-        return Array(party)
-    }
-
     
     /// 飲み会削除
     ///

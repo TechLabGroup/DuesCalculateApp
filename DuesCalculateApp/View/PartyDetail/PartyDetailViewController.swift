@@ -35,11 +35,9 @@ class PartyDetailViewController: UIViewController, UITableViewDataSource, UITabl
         //NavigationBarのタイトル名取得
         pName = DBManager.searchPartyName(partyId: pId)
         members = DBManager.searchAllMember(partyId: pId)
-        //var partyname = DBManager.searchPartyName(partyId: 4)
-        //self.navigationItem.title = partyname
         self.navigationItem.title = pName
         
-        
+        // テーブル下部の飲み会料金詳細を計算
         amountInfo()
         
         //自作セルをテーブルビューに登録する。
@@ -60,9 +58,9 @@ class PartyDetailViewController: UIViewController, UITableViewDataSource, UITabl
             realm.add(testTable, update: true)
         }
         let testTable1 = Member()
-        testTable1.partyId = 1
-        testTable1.memberName = "藤井タカシ"
-        testTable1.mailAddress = "test@tis.co.jp"
+        testTable1.partyId = 0
+        testTable1.memberName = "東洋太郎"
+        testTable1.mailAddress = "test@test.co.jp"
         testTable1.paymentCompleteFlag = 0
         testTable1.paymentAmount = 500
         try! realm.write {
@@ -204,7 +202,7 @@ class PartyDetailViewController: UIViewController, UITableViewDataSource, UITabl
     
     /// ワリカンボタン押下時のダイアログ
     ///
-    /// - Parameter sender: <#sender description#>
+    /// - Parameter sender: sender description
     @IBAction func warikanPush(_ sender: Any) {
         let alertController = UIAlertController(title: "確認!", message: "金額が自動的に割り勘で再計算されます。よろしければOKを選んでください。", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
