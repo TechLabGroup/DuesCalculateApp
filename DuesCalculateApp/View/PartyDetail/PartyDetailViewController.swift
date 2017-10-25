@@ -105,7 +105,6 @@ class PartyDetailViewController: UIViewController, UITableViewDataSource, UITabl
         return members!.count
     }
     
-    
     /// <#Description#>
     /// セルの値と背景色を設定。
     ///
@@ -203,6 +202,7 @@ class PartyDetailViewController: UIViewController, UITableViewDataSource, UITabl
     /// ワリカンボタン押下時のダイアログ
     ///
     /// - Parameter sender: sender description
+
     @IBAction func warikanPush(_ sender: Any) {
         let alertController = UIAlertController(title: "確認!", message: "金額が自動的に割り勘で再計算されます。よろしければOKを選んでください。", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
@@ -213,7 +213,6 @@ class PartyDetailViewController: UIViewController, UITableViewDataSource, UITabl
         
         present(alertController, animated: true, completion: nil)
     }
-    
     
 }
 

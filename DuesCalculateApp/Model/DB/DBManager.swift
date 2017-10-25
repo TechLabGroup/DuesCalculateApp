@@ -32,15 +32,6 @@ final class DBManager {
         return true
     }
     
-    
-    /// 飲み会IDのインクリメント
-    ///
-    /// - Returns: インクリメント結果
-    private static func incrementID() -> Int {
-    let realm = try! Realm()
-    return (realm.objects(Party.self).max(ofProperty: "partyId") as Int? ?? 0) + 1
-    }
-    
     /// メンバー登録
     ///
     /// - Parameters:
@@ -65,7 +56,15 @@ final class DBManager {
         }
         return true
     }
-
+    
+    /// 飲み会IDのインクリメント
+    ///
+    /// - Returns: インクリメント結果
+    private static func incrementID() -> Int {
+        let realm = try! Realm()
+        return (realm.objects(Party.self).max(ofProperty: "partyId") as Int? ?? 0) + 1
+    }
+    
     
     /// 飲み会一覧検索
     ///
@@ -86,7 +85,6 @@ final class DBManager {
         return Array(party)
     }
     
-
     
     /// 飲み会削除
     ///
@@ -122,7 +120,6 @@ final class DBManager {
         }
         return false
     }
-
     
     /// 飲み会名称検索
     ///
@@ -175,6 +172,7 @@ final class DBManager {
             member?.paymentCompleteFlag = 0 })
     }
     
+    
     /// 支払い完了フラグ更新
     ///
     /// - Parameters:
@@ -196,7 +194,5 @@ final class DBManager {
         }
         return false
     }
-    
-
-    
 }
+
