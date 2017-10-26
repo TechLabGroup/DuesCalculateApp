@@ -18,6 +18,7 @@ class PartyDetailViewController: UIViewController, UITableViewDataSource, UITabl
     @IBOutlet weak var sumPrice: UILabel!
     var members: [Member]?
     var pId: Int = 0
+    var memberSerialNo: Int = 0
     var pName: String = "テスト"
     var memberName: String = "test"
     var party: [Party]!
@@ -58,15 +59,27 @@ class PartyDetailViewController: UIViewController, UITableViewDataSource, UITabl
             realm.add(testTable, update: true)
         }
         let testTable1 = Member()
+        testTable1.serialNo = 0
         testTable1.partyId = 0
         testTable1.memberName = "東洋太郎"
         testTable1.mailAddress = "test@test.co.jp"
-        testTable1.paymentCompleteFlag = 0
+        testTable1.paymentCompleteFlag = false
         testTable1.paymentAmount = 500
         try! realm.write {
             realm.add(testTable1, update: true)
         }
+        let testTable2 = Member()
+        testTable2.serialNo = 1
+        testTable2.partyId = 0
+        testTable2.memberName = "東洋花子"
+        testTable2.mailAddress = "test@test.co.jp"
+        testTable2.paymentCompleteFlag = false
+        testTable2.paymentAmount = 500
+        try! realm.write {
+            realm.add(testTable2, update: true)
+        }
         
+        // Realm内の閲覧するために、保存場所をコンソール画面に出力
         print(Realm.Configuration.defaultConfiguration.fileURL!)
     }
     
@@ -76,20 +89,28 @@ class PartyDetailViewController: UIViewController, UITableViewDataSource, UITabl
         
         //合計金額
         var party = DBManager.searchParty(partyId: pId)
+        if party.isEmpty {
+            return
+        }
         let totalAmount: Int = party[0].totalAmount
         sumPrice.text = String(totalAmount)
         //残り金額
         var surPlus: Int = 0
         var count: Int = 0
-        for member in members! where member.paymentCompleteFlag == 0 {
-            surPlus += member.paymentAmount
-            count += 1
+        let totalCount: Int = (members?.count)!
+        if (members?.isEmpty)! {
+            return
+        } else {
+            for member in members! where member.paymentCompleteFlag {
+                surPlus += member.paymentAmount
+                count += 1
+            }
         }
         surplusPrice.text = String(totalAmount - surPlus)
         //実績金額
         collectPrice.text = String(surPlus)
         //残り人数
-        remainMember.text = String(count)
+        remainMember.text = String(totalCount - count)
     }
     
     
@@ -115,14 +136,15 @@ class PartyDetailViewController: UIViewController, UITableViewDataSource, UITabl
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomMemberCell", for: indexPath) as! CustomMemberCell
         // Configure the cell...
-        cell.delegate = self as cellaction
+        cell.delegate = self as CustomMemberCellDelegate
         var paymentAmount: Int = 0
-        var finishFlg: Int = 0
+        var finishFlg: Bool = false
         cell.name.text = members?[indexPath.row].memberName
-        paymentAmount = members![indexPath.row].paymentAmount
+        paymentAmount = (members?[indexPath.row].paymentAmount)!
         cell.price.text = String(paymentAmount)
+        cell.memberSerialNo = members?[indexPath.row].serialNo
         finishFlg = members![indexPath.row].paymentCompleteFlag
-        if finishFlg == 1 {
+        if finishFlg {
             cell.backgroundColor = UIColor.gray
             cell.sw.isOn = false
         } else {
@@ -151,25 +173,36 @@ class PartyDetailViewController: UIViewController, UITableViewDataSource, UITabl
         let cell = tableView.cellForRow(at: indexPath) as! CustomMemberCell
         
         let deleteButton = UITableViewRowAction(style: .normal, title: "削除") {(_, indexPath) -> Void in
-            guard let id = cell.price else {
+            guard let id = cell.memberSerialNo else {
                 return
             }
-            //            DBManager.deleteParty(partyId: id)
+            DBManager.deleteMember(partyId: id)
+//            self.members = DBManager.searchAllMember(partyId: id)
+            self.amountInfo()
+            tableView.deleteRows(at: [indexPath], with: .fade)
             
-            //            self.parties = DBManager.searchParty()
-            //            tableView.deleteRows(at: [indexPath], with: .fade)
         }
         deleteButton.backgroundColor = .red
         
         let editButton = UITableViewRowAction(style: .normal, title: "編集") {(_, _) -> Void in
-            guard let id = cell.price else {
+            guard let id = cell.memberSerialNo else {
                 return
             }
-            //            self.tapEditButton(partyId: id)
+//                        self.tapEditButton(serialNo: id)
         }
         editButton.backgroundColor = .blue
         return [deleteButton, editButton]
     }
+    
+    
+    /// 編集ボタンタップ時の遷移先定義
+    ///
+    /// - Parameter serialNo: 編集対象の参加者ID
+//    @objc private func tapEditButton(serialNo: Int) {
+//        let vc = MoneyInputViewController(serialNo: serialNo)
+//        let nc = UINavigationController(rootViewController: vc)
+//        present(nc, animated: true, completion: nil)
+//    }
     
     
     /// 精算者選択画面へ遷移
@@ -202,7 +235,7 @@ class PartyDetailViewController: UIViewController, UITableViewDataSource, UITabl
     /// ワリカンボタン押下時のダイアログ
     ///
     /// - Parameter sender: sender description
-
+    
     @IBAction func warikanPush(_ sender: Any) {
         let alertController = UIAlertController(title: "確認!", message: "金額が自動的に割り勘で再計算されます。よろしければOKを選んでください。", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
@@ -218,16 +251,19 @@ class PartyDetailViewController: UIViewController, UITableViewDataSource, UITabl
 
 
 // MARK: - cellaction
-extension PartyDetailViewController: cellaction {
-    func changeCellColor(swisOn: Bool, memberCell: UIView) {
-        if swisOn == true {
+extension PartyDetailViewController: CustomMemberCellDelegate {
+    func changeCellColor(swisOn: Bool, memberCell: UIView, memberSerialNo: Int) {
+        if swisOn {
             memberCell.backgroundColor = UIColor.white
-            DBManager.updatePaymentCompFlg(partyId: 0, paymentCompleteFlag: 1)
+            DBManager.updatePaymentCompFlg(serialNo: memberSerialNo, partyId: 0, paymentCompleteFlag: true)
+            amountInfo()
         } else {
             memberCell.backgroundColor = UIColor.gray
-            DBManager.updatePaymentCompFlg(partyId: 0, paymentCompleteFlag: 0)
+            DBManager.updatePaymentCompFlg(serialNo: memberSerialNo, partyId: 0, paymentCompleteFlag: false)
+            amountInfo()
         }
         amountInfo()
+        
         
     }
     
