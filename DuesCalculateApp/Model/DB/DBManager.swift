@@ -5,7 +5,6 @@
 //  Copyright © 2017年 TechLab. All rights reserved.
 //
 
-import Foundation
 import RealmSwift
 
 final class DBManager {
@@ -60,9 +59,9 @@ final class DBManager {
     /// メンバー削除
     ///
     /// - Parameter partyId: 削除結果
-    public static func deleteMember(partyId: Int) {
+    public static func deleteMember(serialNo: Int) {
         let realm = try! Realm()
-        let member = realm.objects(Member.self).filter("partyId == %@", partyId)
+        let member = realm.objects(Member.self).filter("serialNo == %@", serialNo)
         
         try! realm.write {
             realm.delete(member)
@@ -91,10 +90,10 @@ final class DBManager {
     ///
     /// - Parameter partyId: 対象の飲み会ID
     /// - Returns: 該当する飲み会
-    public static func searchParty(partyId: Int) -> [Party] {
+    public static func searchParty(partyId: Int) -> Party {
         let realm = try! Realm()
         let party = realm.objects(Party.self).filter("partyId == %@", partyId)
-        return Array(party)
+        return party[0]
     }
     
     
@@ -164,19 +163,13 @@ final class DBManager {
     ///   - partyId: 飲み会ID
     ///   - paymentCompleteFlag: 支払い完了フラグ
     /// - Returns: 支払い完了結果
-    public static func updatePaymentCompFlg(serialNo: Int, partyId: Int, paymentCompleteFlag: Bool) -> Bool {
+    public static func updatePaymentCompFlg(serialNo: Int, partyId: Int, paymentCompleteFlag: Bool) {
         let realm = try! Realm()
         let party = realm.objects(Member.self).filter("serialNo = %@ && partyId == %@", serialNo, partyId)
         if let update = party.first {
             try! realm.write {
-                if paymentCompleteFlag {
-                    update.paymentCompleteFlag = false
-                } else {
-                    update.paymentCompleteFlag = true
-                }
+                update.paymentCompleteFlag = paymentCompleteFlag
             }
-            return true
         }
-        return false
     }
 }

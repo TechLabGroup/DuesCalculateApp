@@ -49,9 +49,9 @@ class PartyAddViewController: UIViewController {
         // 編集ボタン押下時の挙動
         if let id = editPartyId {
             let party = DBManager.searchParty(partyId: id)
-            inputPartyName.text = party[0].partyName
-            inputPartyDate.text = party[0].date
-            inputTotalAmount.text = String(party[0].totalAmount)
+            inputPartyName.text = party.partyName
+            inputPartyDate.text = party.date
+            inputTotalAmount.text = String(party.totalAmount)
             buttonRegister.setTitle("更新する", for: UIControlState.normal)
         }
 

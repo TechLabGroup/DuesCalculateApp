@@ -100,7 +100,7 @@ class PartyListViewController: UIViewController, UITableViewDelegate, UITableVie
      }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = PartyDetailViewController()
+        let vc = PartyDetailViewController(partyId: (parties?[indexPath.row].partyId)!)
         navigationController?.pushViewController(vc, animated: true)
     	
     }

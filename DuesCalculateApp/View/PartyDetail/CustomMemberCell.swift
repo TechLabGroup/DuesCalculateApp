@@ -7,13 +7,13 @@
 //
 
 import UIKit
-protocol CustomMemberCellDelegate {
+protocol CustomMemberCellDelegate: class {
     func changeCellColor(swisOn: Bool, memberCell: UIView, memberSerialNo: Int)
 }
 
 class CustomMemberCell: UITableViewCell {
     
-    var delegate: CustomMemberCellDelegate!
+    weak var delegate: CustomMemberCellDelegate?
     
     // MARK: - IBOutlets
     @IBOutlet weak var icon: UIImageView!
@@ -30,10 +30,9 @@ class CustomMemberCell: UITableViewCell {
     
     /// セルの背景色を変更
     ///
-    /// - Parameter sender: <#sender description#>
+    /// - Parameter sender: switch
     @IBAction func changeCellColor(_ sender: UISwitch) {
-        let swisOn: Bool = sw.isOn
-        delegate.changeCellColor(swisOn: swisOn, memberCell: memberCell, memberSerialNo: memberSerialNo)
+        delegate?.changeCellColor(swisOn: sender.isOn, memberCell: memberCell, memberSerialNo: memberSerialNo)
 
     }
     

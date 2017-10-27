@@ -8,43 +8,145 @@
 import UIKit
 import RealmSwift
 
+private let kYen: String = "¥"
+private let kBar: String = "-"
+private let kNin: String = "人"
+private let kComma: String = ","
+
+/// 飲み会詳細画面
 class PartyDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    @IBOutlet weak var PartyDetailTable: UITableView!
+    // MARK: - Properties
+    fileprivate var members: [Member]
+    fileprivate let pId: Int
+    private var memberSerialNo: Int = 0
+    private let pName: String
+    private var memberName: String?
+    private let totalamount: Int
     
+    // MARK: - @IBOutlet
+    @IBOutlet weak var PartyDetailTable: UITableView!
     @IBOutlet weak var remainMember: UILabel!
     @IBOutlet weak var collectPrice: UILabel!
     @IBOutlet weak var surplusPrice: UILabel!
     @IBOutlet weak var sumPrice: UILabel!
-    var members: [Member]?
-    var pId: Int = 0
-    var memberSerialNo: Int = 0
-    var pName: String = "テスト"
-    var memberName: String = "test"
-    var party: [Party]!
     
+    // MARK: - IBActions
     
+    /// 通知ボタン押下時のダイアログ
+    ///
+    /// - Parameter sender: 通知ボタン
+    @IBAction func alertPush(_ sender: UIButton) {
+        let alertController = UIAlertController(title: "確認!", message: "未払い者に一斉通知します。よろしければOKを選んでください。", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        let cancelAction = UIAlertAction(title: "CANCEL", style: .default, handler: nil)
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(okAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    /// ワリカンボタン押下時のダイアログ
+    ///
+    /// - Parameter sender: sender description
+    
+    @IBAction func warikanPush(_ sender: Any) {
+        let alertController = UIAlertController(title: "確認!", message: "金額が自動的に割り勘で再計算されます。よろしければOKを選んでください。", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        let cancelAction = UIAlertAction(title: "CANCEL", style: .default, handler: nil)
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(okAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+
+    
+    // MARK: - Initializer
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        // このメソッドが呼ばれることがないため、ダミー値で初期化
+        pId = 0
+        let party = DBManager.searchParty(partyId: pId)
+        pName = party.partyName
+        members = DBManager.searchAllMember(partyId: pId)
+        totalamount = party.totalAmount
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    init(partyId: Int) {
+        pId = partyId
+        let party = DBManager.searchParty(partyId: pId)
+        pName = party.partyName
+        members = DBManager.searchAllMember(partyId: pId)
+        // 合計金額の初期化
+        totalamount = party.totalAmount
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    convenience init() {
+        self.init(nibName: nil, bundle: nil)
+        
+    }
+    
+    // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         test()
         
-        // Do any additional setup after loading the view.
-        
         //NavigationBarのタイトル右上に「+」を表示
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(editMember) )
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(editMember) )
+        
         //NavigationBarのタイトル名取得
-        pName = DBManager.searchPartyName(partyId: pId)
-        members = DBManager.searchAllMember(partyId: pId)
-        self.navigationItem.title = pName
+        navigationItem.title = pName
         
         // テーブル下部の飲み会料金詳細を計算
         amountInfo()
         
         //自作セルをテーブルビューに登録する。
-        let memberCell = UINib(nibName: "CustomMemberCell", bundle: nil)
-        PartyDetailTable.register(memberCell, forCellReuseIdentifier: "CustomMemberCell")
+        PartyDetailTable.register(UINib(nibName: "CustomMemberCell", bundle: nil), forCellReuseIdentifier: "CustomMemberCell")
+    }
+    
+
+    // MARK: - public functions
+    
+    /// 画面下部に表示する情報の計算
+    func amountInfo() {
         
+        sumPrice.text = kYen + priceFormat(price: totalamount) + kBar
+
+        /// 実績金額
+        var surPlus = 0
+        /// 回収実績人数
+        var count = 0
+        
+        //残り金額
+        let totalCount = members.count
+        if !members.isEmpty {
+            for member in members where member.paymentCompleteFlag {
+                surPlus += member.paymentAmount
+                count += 1
+            }
+        }
+
+        // 残り金額
+        surplusPrice.text = kYen + priceFormat(price: totalamount - surPlus) + kBar
+
+        // 実績金額
+        collectPrice.text = kYen + priceFormat(price: surPlus) + kBar
+        
+        // 残り人数
+        remainMember.text = String(totalCount - count) + kNin
+    }
+    
+    /// 精算者選択画面へ遷移
+    func editMember() {
+        let nc = UINavigationController(rootViewController: MemberSelectViewController())
+        present(nc, animated: true, completion: nil)
     }
     
     /// テストデータ投入
@@ -54,7 +156,7 @@ class PartyDetailViewController: UIViewController, UITableViewDataSource, UITabl
         testTable.partyId = 0
         testTable.partyName = "test"
         testTable.date = "20170914"
-        testTable.totalAmount = 50000
+        testTable.totalAmount = 50000000
         try! realm.write {
             realm.add(testTable, update: true)
         }
@@ -84,187 +186,95 @@ class PartyDetailViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     
-    /// 画面下部に表示する情報の計算
-    func amountInfo() {
-        
-        //合計金額
-        var party = DBManager.searchParty(partyId: pId)
-        if party.isEmpty {
-            return
-        }
-        let totalAmount: Int = party[0].totalAmount
-        sumPrice.text = String(totalAmount)
-        //残り金額
-        var surPlus: Int = 0
-        var count: Int = 0
-        let totalCount: Int = (members?.count)!
-        if (members?.isEmpty)! {
-            return
-        } else {
-            for member in members! where member.paymentCompleteFlag {
-                surPlus += member.paymentAmount
-                count += 1
-            }
-        }
-        surplusPrice.text = String(totalAmount - surPlus)
-        //実績金額
-        collectPrice.text = String(surPlus)
-        //残り人数
-        remainMember.text = String(totalCount - count)
+    // MARK: - Private functions
+    
+    /// 編集ボタンタップ時の遷移先定義
+    ///
+    /// - Parameter serialNo: 編集対象の参加者ID
+    private func tapEditButton(serialNo: Int) {
+        let vc = MoneyInputViewController(serialNo: serialNo)
+        //vc.memberSerialNo = serialNo
+        let nc = UINavigationController(rootViewController: vc)
+        present(nc, animated: true, completion: nil)
+    }
+    
+    /// 数値を３桁ごとにカンマで区切る
+    ///
+    /// - Parameter price: 金額
+    /// - Returns: ３桁区切りの金額
+    private func priceFormat(price: Int) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.groupingSeparator = kComma
+        formatter.groupingSize = 3
+
+        return formatter.string(from: price as NSNumber) ?? ""
     }
     
     
-    //TableView
-    /// セルの個数を指定するデリゲートメソッド（必須）
-    ///
-    /// - Parameters:
-    ///   - tableView: <#tableView description#>
-    ///   - section: <#section description#>
-    /// - Returns: <#return value description#>
+    // MARK: - TableView
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // 通常は引数のセクションで分岐して値を返却する
-        return members!.count
+        return members.count
     }
     
-    /// <#Description#>
-    /// セルの値と背景色を設定。
-    ///
-    /// - Parameters:
-    ///   - tableView: <#tableView description#>
-    ///   - indexPath: <#indexPath description#>
-    /// - Returns: <#return value description#>
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomMemberCell", for: indexPath) as! CustomMemberCell
-        // Configure the cell...
         cell.delegate = self as CustomMemberCellDelegate
-        var paymentAmount: Int = 0
-        var finishFlg: Bool = false
-        cell.name.text = members?[indexPath.row].memberName
-        paymentAmount = (members?[indexPath.row].paymentAmount)!
-        cell.price.text = String(paymentAmount)
-        cell.memberSerialNo = members?[indexPath.row].serialNo
-        finishFlg = members![indexPath.row].paymentCompleteFlag
-        if finishFlg {
-            cell.backgroundColor = UIColor.gray
-            cell.sw.isOn = false
-        } else {
-            cell.backgroundColor = UIColor.white
-            cell.sw.isOn = true
-        }
         
+        let member = members[indexPath.row]
+        
+        cell.name.text = member.memberName
+        cell.price.text = priceFormat(price: member.paymentAmount)
+        cell.memberSerialNo = member.serialNo
+        
+        let completeFlg = member.paymentCompleteFlag
+        cell.backgroundColor = completeFlg ? .gray: .white
+        cell.sw.isOn = completeFlg
         
         return cell
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
-    }
-    
-    // Override to support editing the table view
-    /// セルを左にスワイプした時の処理　（※一旦、引数をidにしている）
-    ///
-    /// - Parameters:
-    ///   - tableView: <#tableView description#>
-    ///   - indexPath: <#indexPath description#>
-    /// - Returns: <#return value description#>
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        // supercedes -tableView:titleForDeleteConfirmationButtonForRowAtIndexPath: if return value is non-nil
         let cell = tableView.cellForRow(at: indexPath) as! CustomMemberCell
         
         let deleteButton = UITableViewRowAction(style: .normal, title: "削除") {(_, indexPath) -> Void in
             guard let id = cell.memberSerialNo else {
                 return
             }
-            DBManager.deleteMember(partyId: id)
-//            self.members = DBManager.searchAllMember(partyId: id)
+            DBManager.deleteMember(serialNo: id)
+            // キャプチャリストでselfをweak参照する。
+            self.members = DBManager.searchAllMember(partyId: self.pId)
             self.amountInfo()
             tableView.deleteRows(at: [indexPath], with: .fade)
-            
         }
+        
         deleteButton.backgroundColor = .red
         
         let editButton = UITableViewRowAction(style: .normal, title: "編集") {(_, _) -> Void in
             guard let id = cell.memberSerialNo else {
                 return
+                
             }
-//                        self.tapEditButton(serialNo: id)
+            // キャプチャリストでselfをweak参照する。
+            self.tapEditButton(serialNo: id)
         }
         editButton.backgroundColor = .blue
         return [deleteButton, editButton]
     }
-    
-    
-    /// 編集ボタンタップ時の遷移先定義
-    ///
-    /// - Parameter serialNo: 編集対象の参加者ID
-//    @objc private func tapEditButton(serialNo: Int) {
-//        let vc = MoneyInputViewController(serialNo: serialNo)
-//        let nc = UINavigationController(rootViewController: vc)
-//        present(nc, animated: true, completion: nil)
-//    }
-    
-    
-    /// 精算者選択画面へ遷移
-    func editMember() {
-        let vc = MemberSelectViewController()
-        let nc = UINavigationController(rootViewController: vc)
-        present(nc, animated: true, completion: nil)
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
-    /// 通知ボタン押下時のダイアログ
-    ///
-    /// - Parameter sender: <#sender description#>
-    @IBAction func alertPush(_ sender: UIButton) {
-        let alertController = UIAlertController(title: "確認!", message: "未払い者に一斉通知します。よろしければOKを選んでください。", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-        let cancelAction = UIAlertAction(title: "CANCEL", style: .default, handler: nil)
-        
-        alertController.addAction(cancelAction)
-        alertController.addAction(okAction)
-        
-        present(alertController, animated: true, completion: nil)
-    }
-    
-    /// ワリカンボタン押下時のダイアログ
-    ///
-    /// - Parameter sender: sender description
-    
-    @IBAction func warikanPush(_ sender: Any) {
-        let alertController = UIAlertController(title: "確認!", message: "金額が自動的に割り勘で再計算されます。よろしければOKを選んでください。", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-        let cancelAction = UIAlertAction(title: "CANCEL", style: .default, handler: nil)
-        
-        alertController.addAction(cancelAction)
-        alertController.addAction(okAction)
-        
-        present(alertController, animated: true, completion: nil)
-    }
-    
-}
 
+}
 
 // MARK: - cellaction
 extension PartyDetailViewController: CustomMemberCellDelegate {
     func changeCellColor(swisOn: Bool, memberCell: UIView, memberSerialNo: Int) {
-        if swisOn {
-            memberCell.backgroundColor = UIColor.white
-            DBManager.updatePaymentCompFlg(serialNo: memberSerialNo, partyId: 0, paymentCompleteFlag: true)
-            amountInfo()
-        } else {
-            memberCell.backgroundColor = UIColor.gray
-            DBManager.updatePaymentCompFlg(serialNo: memberSerialNo, partyId: 0, paymentCompleteFlag: false)
-            amountInfo()
-        }
+        
+        memberCell.backgroundColor = swisOn ? .gray : .white
+        DBManager.updatePaymentCompFlg(serialNo: memberSerialNo, partyId: pId, paymentCompleteFlag: swisOn)
+        // Realmはデータ取得後同じインスタンスで管理しているため、データを更新すると
+        // 更新前に取得したデータも値が更新される。
+        // そのためデータの再取得は不要。
+        // データ削除した場合は、削除データを参照しようとするとクラッシュするので要注意
         amountInfo()
-        
-        
     }
-    
 }
