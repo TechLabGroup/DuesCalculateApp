@@ -17,10 +17,10 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="s30.png" translatesAutoresizingMaskIntoConstraints="NO" id="4Tb-BE-Gle" userLabel="icon">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MemberDefault" translatesAutoresizingMaskIntoConstraints="NO" id="4Tb-BE-Gle" userLabel="icon">
                         <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="4Tb-BE-Gle" secondAttribute="height" multiplier="1:1" id="mjc-te-dBy"/>
@@ -71,6 +71,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="s30.png" width="600" height="600"/>
+        <image name="MemberDefault" width="600" height="600"/>
     </resources>
 </document>

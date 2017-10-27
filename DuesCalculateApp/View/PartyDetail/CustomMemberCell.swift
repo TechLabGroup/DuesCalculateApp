@@ -7,13 +7,13 @@
 //
 
 import UIKit
-protocol cellaction {
-    func changeCellColor(swisOn: Bool, memberCell: UIView)
+protocol CustomMemberCellDelegate: class {
+    func changeCellColor(swisOn: Bool, memberCell: UIView, memberSerialNo: Int)
 }
 
 class CustomMemberCell: UITableViewCell {
     
-    var delegate: cellaction!
+    weak var delegate: CustomMemberCellDelegate?
     
     // MARK: - IBOutlets
     @IBOutlet weak var icon: UIImageView!
@@ -21,7 +21,7 @@ class CustomMemberCell: UITableViewCell {
     @IBOutlet weak var memberCell: UIView!
     @IBOutlet weak var price: UILabel!
     @IBOutlet weak var sw: UISwitch!
-    
+    var memberSerialNo: Int!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,10 +30,9 @@ class CustomMemberCell: UITableViewCell {
     
     /// セルの背景色を変更
     ///
-    /// - Parameter sender: <#sender description#>
+    /// - Parameter sender: switch
     @IBAction func changeCellColor(_ sender: UISwitch) {
-        let swisOn: Bool = sw.isOn
-        delegate.changeCellColor(swisOn: swisOn, memberCell: memberCell)
+        delegate?.changeCellColor(swisOn: sender.isOn, memberCell: memberCell, memberSerialNo: memberSerialNo)
 
     }
     

@@ -6,19 +6,25 @@
 //  Copyright © 2017年 TechLab. All rights reserved.
 //
 
-import Foundation
 import RealmSwift
 
 final class Member: Object {
-    dynamic var partyId : Int = 0 //飲み会ID
-    dynamic var memberName : String = ""   //参加者
-    dynamic var mailAddress : String = ""  //メールアドレス
-    dynamic var paymentCompleteFlag : Int = 0 //支払い完了サイン
-    dynamic var paymentAmount : Int = 0   //支払い金額
+    /// シリアルNo
+    dynamic var serialNo: Int = 0
+    /// 飲み会ID
+    dynamic var partyId: Int = 0
+    /// 参加者
+    dynamic var memberName: String = ""
+    /// メールアドレス
+    dynamic var mailAddress: String = ""
+    /// 支払い完了フラグ
+    dynamic var paymentCompleteFlag: Bool = false
+    /// 支払い金額
+    dynamic var paymentAmount: Int = 0
     
     //主キー：飲み会ID　（※複数は選択できない）
     override static func primaryKey() -> String? {
-        return "partyId"
+        return "serialNo"
     }
     
 }
