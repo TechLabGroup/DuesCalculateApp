@@ -9,7 +9,6 @@ import UIKit
 
 class MoneyInputViewController: UIViewController {
     
-    
     @IBOutlet weak var cheakMember: UILabel!
     
     // 前画面で選択されたユーザを収めるディクショナリ
@@ -22,7 +21,8 @@ class MoneyInputViewController: UIViewController {
     var selectPartyId: Int?
     
     // 編集対象のシリアルNo
-    var editSerialNo: Int?
+    // MARK: - Properties
+    private var memberSerialNo: Int?
     
     // MARK: - Initializer
     required init?(coder aDecoder: NSCoder) {
@@ -41,8 +41,8 @@ class MoneyInputViewController: UIViewController {
     }
     
     init(serialNo: Int) {
-        editSerialNo = serialNo
-        
+        memberSerialNo = serialNo
+
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -57,7 +57,7 @@ class MoneyInputViewController: UIViewController {
         // NavigationBarのタイトルを設定
         self.navigationItem.title = "金額入力"
         
-        if let no = editSerialNo {
+        if let no = memberSerialNo {
             // 編集ボタン押下時の挙動
             let member = DBManager.searchMember(serialNo: no)
             cheakMember.text = member[0].name
@@ -75,14 +75,18 @@ class MoneyInputViewController: UIViewController {
         }
 
         // Do any additional setup after loading the view.
-    }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
     }
     
-    // MARK: - IBOutlet
+    
+
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+
+        // MARK: - IBOutlet
     @IBOutlet weak var inputAmount: UITextField!
     
     @IBOutlet weak var buttonRegister: UIButton!
@@ -92,7 +96,7 @@ class MoneyInputViewController: UIViewController {
         
         let amount = Int(inputAmount.text!)
         
-        if let no = editSerialNo {
+        if let no = memberSerialNo {
             // 更新するボタン押下時の挙動
             let _: Bool = DBManager.updateMember(serialNo: no, amount: amount!)
         } else {

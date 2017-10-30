@@ -4,7 +4,7 @@
 //
 //  Copyright © 2017年 TechLab. All rights reserved.
 //
-import Foundation
+
 import RealmSwift
 
 final class DBManager {
@@ -31,6 +31,42 @@ final class DBManager {
         return true
     }
     
+    /// メンバー登録
+    ///
+    /// - Parameters:
+    ///   - partyId: 対象の飲み会ID
+    ///   - memberName: 飲み会参加者名
+    ///   - mailAddress: 飲み会参加者メールアドレス
+    ///   - paymentCompleteFlag: 支払い完了フラグ
+    ///   - paymentAmount: 支払い額
+    /// - Returns: 登録結果
+    public static func entryMember(partyId: Int, memberName: String, mailAddress: String, paymentCompleteFlag: Bool, paymentAmount: Int) -> Bool {
+        let realm = try! Realm()
+        
+        let member = Member()
+        member.partyId = partyId
+        member.memberName = memberName
+        member.mailAddress = mailAddress
+        member.paymentCompleteFlag = paymentCompleteFlag
+        member.paymentAmount = paymentAmount
+        
+        try! realm.write {
+            realm.add(member)
+        }
+        return true
+    }
+    
+    /// メンバー削除
+    ///
+    /// - Parameter partyId: 削除結果
+    public static func deleteMember(serialNo: Int) {
+        let realm = try! Realm()
+        let member = realm.objects(Member.self).filter("serialNo == %@", serialNo)
+        
+        try! realm.write {
+            realm.delete(member)
+        }
+    }
     
     /// 飲み会IDのインクリメント
     ///
@@ -50,15 +86,14 @@ final class DBManager {
         return Array(party)
     }
     
-    
-    /// 飲み会検索
+    //// 飲み会検索
     ///
     /// - Parameter partyId: 対象の飲み会ID
     /// - Returns: 該当する飲み会
-    public static func searchParty(partyId: Int) -> [Party] {
+    public static func searchParty(partyId: Int) -> Party {
         let realm = try! Realm()
         let party = realm.objects(Party.self).filter("partyId == %@", partyId)
-        return Array(party)
+        return party[0]
     }
     
     
@@ -158,4 +193,44 @@ final class DBManager {
         return false
     }
     
+    /// 飲み会名称検索
+    ///
+    /// - Parameter partyId: 対象飲み会ID
+    /// - Returns: 対象飲み会名称
+    public static func searchPartyName(partyId: Int) -> String {
+        let realm = try! Realm()
+        let party = realm.objects(Party.self).filter("partyId == %@", partyId)
+        var partyName = ""
+        for name in party {
+            partyName = name.partyName
+        }
+        return partyName
+    }
+    
+    /// 飲み会参加者一覧検索
+    ///
+    /// - Parameter partyId: 対象飲み会ID
+    /// - Returns: 対象飲み会参加者一覧
+    public static func searchAllMember(partyId: Int) -> [Member] {
+        let realm = try! Realm()
+        let member = realm.objects(Member.self).filter("partyId == %@", partyId)
+        return Array(member)
+    }
+    
+    
+    /// 支払い完了フラグ更新
+    ///
+    /// - Parameters:
+    ///   - partyId: 飲み会ID
+    ///   - paymentCompleteFlag: 支払い完了フラグ
+    /// - Returns: 支払い完了結果
+    public static func updatePaymentCompFlg(serialNo: Int, partyId: Int, paymentCompleteFlag: Bool) {
+        let realm = try! Realm()
+        let party = realm.objects(Member.self).filter("serialNo = %@ && partyId == %@", serialNo, partyId)
+        if let update = party.first {
+            try! realm.write {
+                update.paymentCompleteFlag = paymentCompleteFlag
+            }
+        }
+    }
 }
