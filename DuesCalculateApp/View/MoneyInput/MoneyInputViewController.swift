@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// 金額入力画面
 class MoneyInputViewController: UIViewController {
     
     @IBOutlet weak var cheakMember: UILabel!
@@ -21,10 +22,42 @@ class MoneyInputViewController: UIViewController {
     var selectPartyId: Int?
     
     // 編集対象のシリアルNo
+    
     // MARK: - Properties
+    
     private var memberSerialNo: Int?
     
+    // MARK: - IBOutlet
+    
+    @IBOutlet weak var inputAmount: UITextField!
+    
+    @IBOutlet weak var buttonRegister: UIButton!
+    
+    
+    
+    // 登録するボタン押下時の処理
+    @IBAction func TapInsertButton(_ sender: Any) {
+        
+        let amount = Int(inputAmount.text!)
+        
+        if let no = memberSerialNo {
+            // 更新するボタン押下時の挙動
+            let _: Bool = DBManager.updateMember(serialNo: no, amount: amount!)
+        } else {
+            // 登録するボタン押下時の挙動
+            for index in selectMember.keys {
+                // 選択した人数分登録処理を実施
+                let _: Bool = DBManager.createPartyDetail(partyId: selectPartyId!, name: selectMember[index]!, mailAddress: "test@tis.co.jp", amount: amount!)
+            }
+        }
+        // ボタンをタップしたら飲み会詳細画面に.遷移
+        let vc = PartyDetailViewController()
+        let nc = UINavigationController(rootViewController: vc)
+        present(nc, animated: true, completion: nil)
+    }
+
     // MARK: - Initializer
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -33,9 +66,9 @@ class MoneyInputViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
-    init(partyId: Int, addMember: [Int: String]) {
+    init(partyId: Int, selectedMember: [Int: String]) {
         selectPartyId = partyId
-        selectMember = addMember
+        selectMember = selectedMember
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -50,7 +83,7 @@ class MoneyInputViewController: UIViewController {
         self.init(nibName: nil, bundle: nil)
     }
 
-    // MARK: - LyfeCycle
+    // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -73,53 +106,9 @@ class MoneyInputViewController: UIViewController {
             
             cheakMember.text = name
         }
-
-        // Do any additional setup after loading the view.
-
-        
     }
-    
-    
-
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
-        // MARK: - IBOutlet
-    @IBOutlet weak var inputAmount: UITextField!
-    
-    @IBOutlet weak var buttonRegister: UIButton!
-    
-    // 登録するボタン押下時の処理
-    @IBAction func TapInsertButton(_ sender: Any) {
-        
-        let amount = Int(inputAmount.text!)
-        
-        if let no = memberSerialNo {
-            // 更新するボタン押下時の挙動
-            let _: Bool = DBManager.updateMember(serialNo: no, amount: amount!)
-        } else {
-            // 登録するボタン押下時の挙動
-            for index in selectMember.keys {
-                // 選択した人数分登録処理を実施
-                let _: Bool = DBManager.createPartyDetail(partyId: selectPartyId!, name: selectMember[index]!, mailAddress: "test@tis.co.jp", amount: amount!)
-            }
-        }
-        // ボタンをタップしたら飲み会詳細画面に遷移
-        let vc = PartyDetailViewController()
-        let nc = UINavigationController(rootViewController: vc)
-        present(nc, animated: true, completion: nil)
-    }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
