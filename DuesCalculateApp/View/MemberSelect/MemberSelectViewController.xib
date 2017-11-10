@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MemberSelectViewController" customModule="DuesCalculateApp" customModuleProvider="target">
             <connections>
+                <outlet property="tableView" destination="ekv-9b-z0h" id="QI3-Ea-SuX"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -20,14 +21,18 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="seM-MR-tW3">
-                    <rect key="frame" x="156.5" y="622" width="62" height="30"/>
-                    <state key="normal" title="金額入力"/>
+                    <rect key="frame" x="136.5" y="610" width="102" height="42"/>
+                    <color key="backgroundColor" red="0.44094537073558226" green="0.83696859137055823" blue="0.81231137555540933" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                    <state key="normal" title="金額入力">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
                     <connections>
                         <action selector="tapMoneyInputButton:" destination="-1" eventType="touchUpInside" id="8VC-f1-x2Z"/>
                     </connections>
                 </button>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ekv-9b-z0h">
-                    <rect key="frame" x="0.0" y="44" width="375" height="563"/>
+                    <rect key="frame" x="0.0" y="65" width="375" height="530"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="GOg-tI-XhA"/>
@@ -37,7 +42,7 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="ekv-9b-z0h" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="44" id="MwR-6X-1T4"/>
+                <constraint firstItem="ekv-9b-z0h" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="65" id="MwR-6X-1T4"/>
                 <constraint firstItem="seM-MR-tW3" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="QgN-pI-b8Z"/>
                 <constraint firstItem="seM-MR-tW3" firstAttribute="top" secondItem="ekv-9b-z0h" secondAttribute="bottom" constant="15" id="UIF-ZX-rL7"/>
                 <constraint firstItem="ekv-9b-z0h" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="VBW-W6-C52"/>

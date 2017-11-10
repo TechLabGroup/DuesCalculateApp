@@ -132,6 +132,67 @@ final class DBManager {
         return false
     }
     
+    /// 参加者オブジェクト作成
+    ///
+    /// - Parameters:
+    ///   - partyId: 飲み会ID
+    ///   - name: 参加者
+    ///   - mailAddress: メールアドレス
+    ///   - amount: 金額
+    /// - Returns: 登録結果
+    public static func createPartyDetail(partyId: Int, name: String, mailAddress: String, amount: Int) -> Bool {
+        let realm = try! Realm()
+        
+        let partyDetail = PartyDetail()
+        partyDetail.serialNo = incrementNo()
+        partyDetail.partyId = partyId
+        partyDetail.name = name
+        partyDetail.mailAddress = mailAddress
+        partyDetail.paymentCompleteFlag = 0
+        partyDetail.paymentAmount = amount
+        
+        try! realm.write {
+            realm.add(partyDetail)
+        }
+        return true
+    }
+    
+    /// シリアルNoのインクリメント
+    ///
+    /// - Returns: インクリメント結果
+    private static func incrementNo() -> Int {
+        let realm = try! Realm()
+        return (realm.objects(PartyDetail.self).max(ofProperty: "serialNo") as Int? ?? 0) + 1
+    }
+    
+    /// 参加者検索
+    ///
+    /// - Parameter serialNo: 対象のシリアルNo
+    /// - Returns: 該当する参加者
+    public static func searchMember(serialNo: Int) -> [PartyDetail] {
+        let realm = try! Realm()
+        let party = realm.objects(PartyDetail.self).filter("serialNo == %@", serialNo)
+        return Array(party)
+    }
+    
+    /// 参加者更新
+    ///
+    /// - Parameters:
+    ///   - serialNo: 対象のシリアルNo
+    ///   - amount: 金額
+    /// - Returns: 更新結果
+    public static func updateMember(serialNo: Int, amount: Int) -> Bool {
+        let realm = try! Realm()
+        let member = realm.objects(PartyDetail.self).filter("serialNo == %@", serialNo)
+        if let update = member.first {
+            try! realm.write {
+                update.paymentAmount = amount
+            }
+            return true
+        }
+        return false
+    }
+    
     /// 飲み会名称検索
     ///
     /// - Parameter partyId: 対象飲み会ID
