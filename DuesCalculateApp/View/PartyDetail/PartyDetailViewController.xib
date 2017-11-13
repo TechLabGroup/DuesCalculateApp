@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16C68" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -33,8 +33,11 @@
                     </connections>
                 </tableView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kmU-qn-qCT">
-                    <rect key="frame" x="80" y="543" width="77" height="30"/>
+                    <rect key="frame" x="80" y="543" width="87" height="30"/>
                     <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="87" id="brl-VK-uyd"/>
+                    </constraints>
                     <state key="normal" title="通知ボタン">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -44,12 +47,15 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <connections>
-                        <action selector="warikanPush:" destination="-1" eventType="touchUpInside" id="1XK-J2-mqU"/>
+                        <action selector="noticePush:" destination="-1" eventType="touchUpInside" id="ZA3-to-HS3"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gDq-ri-Bs4">
-                    <rect key="frame" x="233" y="543" width="62" height="30"/>
+                    <rect key="frame" x="208" y="543" width="87" height="30"/>
                     <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="87" id="jKE-Xy-dDf"/>
+                    </constraints>
                     <color key="tintColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <state key="normal" title="ワリカン">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -169,7 +175,7 @@
                 <constraint firstItem="Aig-li-gtE" firstAttribute="top" secondItem="gDq-ri-Bs4" secondAttribute="bottom" constant="10" id="JbH-r0-hlX"/>
                 <constraint firstItem="Aig-li-gtE" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="U2k-Oy-ZLk"/>
                 <constraint firstAttribute="bottom" secondItem="Aig-li-gtE" secondAttribute="bottom" id="U9s-Z2-fz0"/>
-                <constraint firstItem="gDq-ri-Bs4" firstAttribute="leading" secondItem="1sr-Qx-Syh" secondAttribute="trailing" constant="-142" id="UlR-n4-jTk"/>
+                <constraint firstItem="gDq-ri-Bs4" firstAttribute="trailing" secondItem="1sr-Qx-Syh" secondAttribute="trailing" constant="-80" id="UlR-n4-jTk"/>
                 <constraint firstItem="1sr-Qx-Syh" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="bJg-gb-JTD"/>
                 <constraint firstAttribute="trailing" secondItem="gDq-ri-Bs4" secondAttribute="trailing" constant="80" id="co5-YL-t1t"/>
                 <constraint firstItem="kmU-qn-qCT" firstAttribute="top" secondItem="1sr-Qx-Syh" secondAttribute="bottom" constant="10" id="fNs-UC-ezp"/>

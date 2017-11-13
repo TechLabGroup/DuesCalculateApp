@@ -53,18 +53,16 @@ class MemberSelectViewController: UIViewController, UITableViewDelegate, UITable
         self.init(nibName: nil, bundle: nil)
     }
     
-    // MARK: - LyfeCycle
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // NavigationBarのタイトルを設定
-        self.navigationItem.title = "精算者選択"
+        navigationItem.title = "精算者選択"
+        let leftItem =  UIBarButtonItem(title: "閉じる", style: .plain, target: self, action: #selector(tapCloseButton))
+        navigationItem.leftBarButtonItem = leftItem
         reloadPeople()
         
-        //自作セルをテーブルビューに登録する。
-        let memberCell = UINib(nibName: "MemberTableViewCell", bundle: nil)
-        tableView.register(memberCell, forCellReuseIdentifier: "MemberCell")
     }
     
     override func didReceiveMemoryWarning() {
@@ -72,6 +70,11 @@ class MemberSelectViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     // MARK: - Private Functions
+    
+    /// 閉じるボタンタップ時にモーダル解除
+    @objc private func tapCloseButton() {
+        dismiss(animated: true, completion: nil)
+    }
     
     private func reloadPeople() {
         // 連絡帳アクセス可否状態を取得
@@ -131,10 +134,9 @@ class MemberSelectViewController: UIViewController, UITableViewDelegate, UITable
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MemberCell", for: indexPath) as! MemberTableViewCell
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
         // アドレス帳から取得した氏名をラベルに設定する
-        cell.name?.text = people[indexPath.row].familyName + people[indexPath.row].givenName
+        cell.textLabel?.text = people[indexPath.row].familyName + people[indexPath.row].givenName
         cell.accessoryType = .none
         
         return cell
@@ -144,15 +146,15 @@ class MemberSelectViewController: UIViewController, UITableViewDelegate, UITable
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let cell = tableView.cellForRow(at: indexPath) as! MemberTableViewCell
-        
-        // チェックマークの状態を変更
-        if cell.accessoryType == .none {
-            cell.accessoryType = .checkmark
-            selectedMember[indexPath.row] = people[indexPath.row].familyName+people[indexPath.row].givenName
-        } else {
-            cell.accessoryType = .none
-            selectedMember[indexPath.row] = nil
+        if let cell = tableView.cellForRow(at: indexPath) {
+            // チェックマークの状態を変更
+            if cell.accessoryType == .none {
+                cell.accessoryType = .checkmark
+                selectedMember[indexPath.row] = people[indexPath.row].familyName+people[indexPath.row].givenName
+            } else {
+                cell.accessoryType = .none
+                selectedMember[indexPath.row] = nil
+            }
         }
     }
     

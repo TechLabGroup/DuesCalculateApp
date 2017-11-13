@@ -36,7 +36,7 @@ class PartyDetailViewController: UIViewController, UITableViewDataSource, UITabl
     /// 通知ボタン押下時のダイアログ
     ///
     /// - Parameter sender: 通知ボタン
-    @IBAction func alertPush(_ sender: UIButton) {
+    @IBAction func noticePush(_ sender: UIButton) {
         let alertController = UIAlertController(title: "確認!", message: "未払い者に一斉通知します。よろしければOKを選んでください。", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         let cancelAction = UIAlertAction(title: "CANCEL", style: .default, handler: nil)
@@ -93,10 +93,9 @@ class PartyDetailViewController: UIViewController, UITableViewDataSource, UITabl
         
     }
     
-    // MARK: - LifeCycle
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        test()
         
         //NavigationBarのタイトル右上に「+」を表示
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(editMember) )
@@ -149,43 +148,6 @@ class PartyDetailViewController: UIViewController, UITableViewDataSource, UITabl
         present(nc, animated: true, completion: nil)
     }
     
-    /// テストデータ投入
-    func test() {
-        let realm = try! Realm()
-        let testTable = Party()
-        testTable.partyId = 0
-        testTable.partyName = "test"
-        testTable.date = "20170914"
-        testTable.totalAmount = 50000000
-        try! realm.write {
-            realm.add(testTable, update: true)
-        }
-        let testTable1 = Member()
-        testTable1.serialNo = 0
-        testTable1.partyId = 0
-        testTable1.memberName = "東洋太郎"
-        testTable1.mailAddress = "test@test.co.jp"
-        testTable1.paymentCompleteFlag = false
-        testTable1.paymentAmount = 500
-        try! realm.write {
-            realm.add(testTable1, update: true)
-        }
-        let testTable2 = Member()
-        testTable2.serialNo = 1
-        testTable2.partyId = 0
-        testTable2.memberName = "東洋花子"
-        testTable2.mailAddress = "test@test.co.jp"
-        testTable2.paymentCompleteFlag = false
-        testTable2.paymentAmount = 500
-        try! realm.write {
-            realm.add(testTable2, update: true)
-        }
-        
-        // Realm内の閲覧するために、保存場所をコンソール画面に出力
-        print(Realm.Configuration.defaultConfiguration.fileURL!)
-    }
-    
-    
     // MARK: - Private functions
     
     /// 編集ボタンタップ時の遷移先定義
@@ -193,7 +155,6 @@ class PartyDetailViewController: UIViewController, UITableViewDataSource, UITabl
     /// - Parameter serialNo: 編集対象の参加者ID
     private func tapEditButton(serialNo: Int) {
         let vc = MoneyInputViewController(serialNo: serialNo)
-        //vc.memberSerialNo = serialNo
         let nc = UINavigationController(rootViewController: vc)
         present(nc, animated: true, completion: nil)
     }
