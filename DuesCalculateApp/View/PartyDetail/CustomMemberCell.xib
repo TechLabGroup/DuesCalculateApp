@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16C68" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -17,7 +17,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MemberDefault" translatesAutoresizingMaskIntoConstraints="NO" id="4Tb-BE-Gle" userLabel="icon">
@@ -39,7 +39,7 @@
                         </connections>
                     </switch>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="testuser" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dh7-lP-GQA" userLabel="name">
-                        <rect key="frame" x="59" y="18" width="63" height="8"/>
+                        <rect key="frame" x="59" y="11" width="63" height="21.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -49,13 +49,13 @@
                     <constraint firstItem="4Tb-BE-Gle" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="1JK-LR-MMw"/>
                     <constraint firstAttribute="bottom" secondItem="dXa-p5-lgR" secondAttribute="bottom" constant="5" id="DcD-j9-uxF"/>
                     <constraint firstItem="4Tb-BE-Gle" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="HtS-4W-oCj"/>
-                    <constraint firstItem="Dh7-lP-GQA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="10" id="J1k-9X-7c7"/>
+                    <constraint firstItem="Dh7-lP-GQA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="J1k-9X-7c7"/>
                     <constraint firstAttribute="trailing" secondItem="dXa-p5-lgR" secondAttribute="trailing" constant="10" id="NX7-6u-xSs"/>
                     <constraint firstItem="dXa-p5-lgR" firstAttribute="leading" secondItem="zo9-yY-sqy" secondAttribute="trailing" constant="15" id="WcF-Qs-Do4"/>
                     <constraint firstAttribute="bottom" secondItem="4Tb-BE-Gle" secondAttribute="bottom" id="crf-wh-R7L"/>
                     <constraint firstItem="Dh7-lP-GQA" firstAttribute="leading" secondItem="4Tb-BE-Gle" secondAttribute="trailing" constant="15" id="dxQ-fN-vAJ"/>
                     <constraint firstAttribute="bottomMargin" secondItem="zo9-yY-sqy" secondAttribute="bottom" constant="5" id="gTY-DZ-dzj"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="Dh7-lP-GQA" secondAttribute="bottom" constant="10" id="hCV-J1-dyl"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="Dh7-lP-GQA" secondAttribute="bottom" constant="3" id="hCV-J1-dyl"/>
                     <constraint firstItem="zo9-yY-sqy" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="qfM-2v-nRA"/>
                     <constraint firstItem="dXa-p5-lgR" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="zKC-5z-nbN"/>
                 </constraints>

@@ -29,7 +29,7 @@ class MoneyInputViewController: UIViewController {
     
     // MARK: - IBOutlet
     
-    @IBOutlet weak var cheakMember: UILabel!
+    @IBOutlet weak var chekMember: UILabel!
 
     @IBOutlet weak var inputAmount: UITextField!
     
@@ -52,14 +52,11 @@ class MoneyInputViewController: UIViewController {
                 if let partyId = selectPartyId,
                     let name = selectMember[index],
                     let amount = amount {
-                    let _: Bool = DBManager.createPartyDetail(partyId: partyId, name: name, mailAddress: "test@test.co.jp", amount: amount)
+                    let _: Bool = DBManager.entryMember(partyId: partyId, memberName: name, mailAddress: "test@test.co.jp", paymentCompleteFlag: false, paymentAmount: amount)
                 }
             }
         }
-        // ボタンをタップしたら飲み会詳細画面に.遷移
-        let vc = PartyDetailViewController()
-        let nc = UINavigationController(rootViewController: vc)
-        present(nc, animated: true, completion: nil)
+            dismiss(animated: true, completion: nil)
     }
 
     // MARK: - Initializer
@@ -75,30 +72,14 @@ class MoneyInputViewController: UIViewController {
         selectMember = selectedMember
         
         super.init(nibName: nil, bundle: nil)
-        
-        cheakMember.numberOfLines = selectMember.count
-        
-        for index in selectMember.keys {
-            name += selectMember[index]! + "\n"
-        }
-        
-        cheakMember.text = name
-
     }
     
     /// 飲み会詳細画面から編集ボタン押下で遷移した場合
     ///
-    /// - Parameter serialNo: 飲み会ID
-    init(partyId: Int) {
-        selectPartyId = partyId
-
+    /// - Parameter serialNo: シリアルNo
+    init(serialNo: Int) {
+        self.memberSerialNo = serialNo
         super.init(nibName: nil, bundle: nil)
-        
-        let member = DBManager.searchMember(serialNo: no)
-        cheakMember.text = member.memberName
-        inputAmount.text = String(member.paymentAmount)
-        buttonRegister.setTitle("更新する", for: .normal)
-
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -118,6 +99,21 @@ class MoneyInputViewController: UIViewController {
         toolBar.items = [toolBarBtn]
         inputAmount.inputAccessoryView = toolBar
 
+        if let serialNo = memberSerialNo {
+            // 飲み会詳細画面から遷移した場合
+            let member = DBManager.searchMemberBySerialNo(serialNo: serialNo)
+            chekMember.text = member.memberName
+            inputAmount.text = String(member.paymentAmount)
+            buttonRegister.setTitle("更新する", for: .normal)
+        } else {
+            // 参加者選択画面から遷移した場合
+            chekMember.numberOfLines = selectMember.count
+            
+            for index in selectMember.keys {
+                name += selectMember[index]! + "\n"
+            }
+            chekMember.text = name
+        }
     }
     
     override func didReceiveMemoryWarning() {

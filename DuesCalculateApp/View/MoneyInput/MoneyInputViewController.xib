@@ -12,7 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MoneyInputViewController" customModule="DuesCalculateApp" customModuleProvider="target">
             <connections>
                 <outlet property="buttonRegister" destination="9eV-T5-0tX" id="hHV-nW-r88"/>
-                <outlet property="cheakMember" destination="YQS-wF-Rba" id="IYX-fD-ufr"/>
+                <outlet property="chekMember" destination="YQS-wF-Rba" id="yFv-Q0-pDS"/>
                 <outlet property="inputAmount" destination="sfi-UV-7ze" id="5cR-Pt-hn7"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -46,7 +46,7 @@
                         <color key="titleShadowColor" red="0.37720512269813777" green="1" blue="0.97566924025229118" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </state>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="keyPath">
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                             <integer key="value" value="10"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>

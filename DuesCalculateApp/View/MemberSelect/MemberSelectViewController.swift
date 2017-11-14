@@ -76,6 +76,8 @@ class MemberSelectViewController: UIViewController, UITableViewDelegate, UITable
         dismiss(animated: true, completion: nil)
     }
     
+    
+    /// 連絡先一覧を取得する。
     private func reloadPeople() {
         // 連絡帳アクセス可否状態を取得
         let status = CNContactStore.authorizationStatus(for: CNEntityType.contacts)
