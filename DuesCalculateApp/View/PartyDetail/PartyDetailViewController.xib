@@ -11,7 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PartyDetailViewController" customModule="DuesCalculateApp" customModuleProvider="target">
             <connections>
-                <outlet property="PartyDetailTable" destination="1sr-Qx-Syh" id="TFX-eS-GI0"/>
+                <outlet property="partyDetailTable" destination="1sr-Qx-Syh" id="TFX-eS-GI0"/>
                 <outlet property="collectPrice" destination="VO7-Yp-GIe" id="39U-OJ-gcz"/>
                 <outlet property="remainMember" destination="k9A-0o-3mT" id="M33-tf-0w6"/>
                 <outlet property="sumPrice" destination="B0B-09-oRA" id="bcQ-i3-BXV"/>

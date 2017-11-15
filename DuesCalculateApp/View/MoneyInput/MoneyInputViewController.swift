@@ -92,8 +92,6 @@ class MoneyInputViewController: UIViewController {
         
         // NavigationBarのタイトルを設定
         self.navigationItem.title = "金額入力"
-        let leftItem =  UIBarButtonItem(title: "閉じる", style: .plain, target: self, action: #selector(tapCloseButton))
-        navigationItem.leftBarButtonItem = leftItem
         
         let toolBar = UIToolbar()
         toolBar.sizeToFit()
@@ -107,12 +105,17 @@ class MoneyInputViewController: UIViewController {
             chekMember.text = member.memberName
             inputAmount.text = String(member.paymentAmount)
             buttonRegister.setTitle("更新する", for: .normal)
+            
+            let leftItem =  UIBarButtonItem(title: "閉じる", style: .plain, target: self, action: #selector(tapCloseButton))
+            navigationItem.leftBarButtonItem = leftItem
+
         } else {
             // 参加者選択画面から遷移した場合
             chekMember.numberOfLines = selectMember.count
             
-            for index in selectMember.keys {
-                name += selectMember[index]! + "\n"
+            name = selectMember.reduce("") { result, member in
+                
+                return result + (result.isEmpty ? member.value : "\n" + member.value)
             }
             chekMember.text = name
         }

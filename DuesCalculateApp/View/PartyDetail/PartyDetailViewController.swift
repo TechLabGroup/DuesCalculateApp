@@ -25,7 +25,7 @@ class PartyDetailViewController: UIViewController, UITableViewDataSource, UITabl
     private let totalamount: Int
     
     // MARK: - @IBOutlet
-    @IBOutlet weak var PartyDetailTable: UITableView!
+    @IBOutlet weak var partyDetailTable: UITableView!
     @IBOutlet weak var remainMember: UILabel!
     @IBOutlet weak var collectPrice: UILabel!
     @IBOutlet weak var surplusPrice: UILabel!
@@ -52,8 +52,20 @@ class PartyDetailViewController: UIViewController, UITableViewDataSource, UITabl
     /// - Parameter sender: sender description
     
     @IBAction func warikanPush(_ sender: Any) {
+        
         let alertController = UIAlertController(title: "確認!", message: "金額が自動的に割り勘で再計算されます。よろしければOKを選んでください。", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: { [weak self] (_: UIAlertAction) -> Void in
+            guard let me = self else {
+                return
+            }
+            
+            let price = me.totalamount / me.members.count + me.totalamount % me.members.count
+            for member in me.members {
+                _ = DBManager.updateMember(serialNo: member.serialNo, amount: price)
+            }
+            me.members = DBManager.searchMemberByPartyId(partyId: me.pId)
+            me.partyDetailTable.reloadData()
+        })
         let cancelAction = UIAlertAction(title: "CANCEL", style: .default, handler: nil)
         
         alertController.addAction(cancelAction)
@@ -107,11 +119,12 @@ class PartyDetailViewController: UIViewController, UITableViewDataSource, UITabl
         amountInfo()
         
         //自作セルをテーブルビューに登録する。
-        PartyDetailTable.register(UINib(nibName: "CustomMemberCell", bundle: nil), forCellReuseIdentifier: "CustomMemberCell")
+        partyDetailTable.register(UINib(nibName: "CustomMemberCell", bundle: nil), forCellReuseIdentifier: "CustomMemberCell")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         members = DBManager.searchMemberByPartyId(partyId: pId)
+        partyDetailTable.reloadData()
     }
 
     // MARK: - public functions

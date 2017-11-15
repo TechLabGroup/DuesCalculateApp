@@ -28,10 +28,10 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="一人当たりの金額を入力してください" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sfi-UV-7ze">
-                    <rect key="frame" x="137.5" y="303.5" width="100" height="30"/>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="一人当たりの金額" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sfi-UV-7ze">
+                    <rect key="frame" x="112.5" y="303.5" width="150" height="30"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="100" id="ycf-xL-QGH"/>
+                        <constraint firstAttribute="width" constant="150" id="ycf-xL-QGH"/>
                     </constraints>
                     <nil key="textColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
