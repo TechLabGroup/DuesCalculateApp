@@ -92,6 +92,8 @@ class MoneyInputViewController: UIViewController {
         
         // NavigationBarのタイトルを設定
         self.navigationItem.title = "金額入力"
+        let leftItem =  UIBarButtonItem(title: "閉じる", style: .plain, target: self, action: #selector(tapCloseButton))
+        navigationItem.leftBarButtonItem = leftItem
         
         let toolBar = UIToolbar()
         toolBar.sizeToFit()
@@ -122,9 +124,13 @@ class MoneyInputViewController: UIViewController {
     
     // MARK: - Private Functions
     
+    /// 閉じるボタンタップ時にモーダル解除
+    @objc private func tapCloseButton() {
+        dismiss(animated: true, completion: nil)
+    }
+    
     //toolbarのdoneボタン
     @objc private func doneBtn() {
         inputAmount.resignFirstResponder()
     }
-
 }
