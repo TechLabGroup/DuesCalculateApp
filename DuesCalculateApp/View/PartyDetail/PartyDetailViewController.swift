@@ -25,7 +25,7 @@ class PartyDetailViewController: UIViewController, UITableViewDataSource, UITabl
     private let totalamount: Int
     
     // MARK: - @IBOutlet
-    @IBOutlet weak var PartyDetailTable: UITableView!
+    @IBOutlet weak var partyDetailTable: UITableView!
     @IBOutlet weak var remainMember: UILabel!
     @IBOutlet weak var collectPrice: UILabel!
     @IBOutlet weak var surplusPrice: UILabel!
@@ -36,7 +36,7 @@ class PartyDetailViewController: UIViewController, UITableViewDataSource, UITabl
     /// 通知ボタン押下時のダイアログ
     ///
     /// - Parameter sender: 通知ボタン
-    @IBAction func alertPush(_ sender: UIButton) {
+    @IBAction func noticePush(_ sender: UIButton) {
         let alertController = UIAlertController(title: "確認!", message: "未払い者に一斉通知します。よろしければOKを選んでください。", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         let cancelAction = UIAlertAction(title: "CANCEL", style: .default, handler: nil)
@@ -52,8 +52,20 @@ class PartyDetailViewController: UIViewController, UITableViewDataSource, UITabl
     /// - Parameter sender: sender description
     
     @IBAction func warikanPush(_ sender: Any) {
+        
         let alertController = UIAlertController(title: "確認!", message: "金額が自動的に割り勘で再計算されます。よろしければOKを選んでください。", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: { [weak self] (_: UIAlertAction) -> Void in
+            guard let me = self else {
+                return
+            }
+            
+            let price = me.totalamount / me.members.count + me.totalamount % me.members.count
+            for member in me.members {
+                _ = DBManager.updateMember(serialNo: member.serialNo, amount: price)
+            }
+            me.members = DBManager.searchMemberByPartyId(partyId: me.pId)
+            me.partyDetailTable.reloadData()
+        })
         let cancelAction = UIAlertAction(title: "CANCEL", style: .default, handler: nil)
         
         alertController.addAction(cancelAction)
@@ -73,7 +85,7 @@ class PartyDetailViewController: UIViewController, UITableViewDataSource, UITabl
         pId = 0
         let party = DBManager.searchParty(partyId: pId)
         pName = party.partyName
-        members = DBManager.searchAllMember(partyId: pId)
+        members = DBManager.searchMemberByPartyId(partyId: pId)
         totalamount = party.totalAmount
         super.init(nibName: nil, bundle: nil)
     }
@@ -82,7 +94,7 @@ class PartyDetailViewController: UIViewController, UITableViewDataSource, UITabl
         pId = partyId
         let party = DBManager.searchParty(partyId: pId)
         pName = party.partyName
-        members = DBManager.searchAllMember(partyId: pId)
+        members = DBManager.searchMemberByPartyId(partyId: pId)
         // 合計金額の初期化
         totalamount = party.totalAmount
         super.init(nibName: nil, bundle: nil)
@@ -93,10 +105,9 @@ class PartyDetailViewController: UIViewController, UITableViewDataSource, UITabl
         
     }
     
-    // MARK: - LifeCycle
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        test()
         
         //NavigationBarのタイトル右上に「+」を表示
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(editMember) )
@@ -108,9 +119,13 @@ class PartyDetailViewController: UIViewController, UITableViewDataSource, UITabl
         amountInfo()
         
         //自作セルをテーブルビューに登録する。
-        PartyDetailTable.register(UINib(nibName: "CustomMemberCell", bundle: nil), forCellReuseIdentifier: "CustomMemberCell")
+        partyDetailTable.register(UINib(nibName: "CustomMemberCell", bundle: nil), forCellReuseIdentifier: "CustomMemberCell")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        members = DBManager.searchMemberByPartyId(partyId: pId)
+        partyDetailTable.reloadData()
+    }
 
     // MARK: - public functions
     
@@ -145,46 +160,9 @@ class PartyDetailViewController: UIViewController, UITableViewDataSource, UITabl
     
     /// 精算者選択画面へ遷移
     func editMember() {
-        let nc = UINavigationController(rootViewController: MemberSelectViewController())
+        let nc = UINavigationController(rootViewController: MemberSelectViewController(partyId: pId))
         present(nc, animated: true, completion: nil)
     }
-    
-    /// テストデータ投入
-    func test() {
-        let realm = try! Realm()
-        let testTable = Party()
-        testTable.partyId = 0
-        testTable.partyName = "test"
-        testTable.date = "20170914"
-        testTable.totalAmount = 50000000
-        try! realm.write {
-            realm.add(testTable, update: true)
-        }
-        let testTable1 = Member()
-        testTable1.serialNo = 0
-        testTable1.partyId = 0
-        testTable1.memberName = "東洋太郎"
-        testTable1.mailAddress = "test@test.co.jp"
-        testTable1.paymentCompleteFlag = false
-        testTable1.paymentAmount = 500
-        try! realm.write {
-            realm.add(testTable1, update: true)
-        }
-        let testTable2 = Member()
-        testTable2.serialNo = 1
-        testTable2.partyId = 0
-        testTable2.memberName = "東洋花子"
-        testTable2.mailAddress = "test@test.co.jp"
-        testTable2.paymentCompleteFlag = false
-        testTable2.paymentAmount = 500
-        try! realm.write {
-            realm.add(testTable2, update: true)
-        }
-        
-        // Realm内の閲覧するために、保存場所をコンソール画面に出力
-        print(Realm.Configuration.defaultConfiguration.fileURL!)
-    }
-    
     
     // MARK: - Private functions
     
@@ -192,8 +170,8 @@ class PartyDetailViewController: UIViewController, UITableViewDataSource, UITabl
     ///
     /// - Parameter serialNo: 編集対象の参加者ID
     private func tapEditButton(serialNo: Int) {
+        // 飲み会詳細画面で選択した参加者の金額を修正する。
         let vc = MoneyInputViewController(serialNo: serialNo)
-        //vc.memberSerialNo = serialNo
         let nc = UINavigationController(rootViewController: vc)
         present(nc, animated: true, completion: nil)
     }
@@ -244,7 +222,7 @@ class PartyDetailViewController: UIViewController, UITableViewDataSource, UITabl
             }
             DBManager.deleteMember(serialNo: id)
             // キャプチャリストでselfをweak参照する。
-            self.members = DBManager.searchAllMember(partyId: self.pId)
+            self.members = DBManager.searchMemberByPartyId(partyId: self.pId)
             self.amountInfo()
             tableView.deleteRows(at: [indexPath], with: .fade)
         }

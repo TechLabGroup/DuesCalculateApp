@@ -10,30 +10,32 @@ import UIKit
 /// 金額入力画面
 class MoneyInputViewController: UIViewController {
     
-    @IBOutlet weak var cheakMember: UILabel!
-    
+    // MARK: - Properties
+
     // 前画面で選択されたユーザを収めるディクショナリ
     var selectMember  = [Int: String]()
     
     // 前画面で選択した人を表示するための変数
     var name: String = ""
     
+    // 全画面で選択した人のメールアドレスを保持するための変数
+    var memberMailAddress  = [Int: String]()
+    
     // 飲み会ID
     var selectPartyId: Int?
     
     // 編集対象のシリアルNo
-    
-    // MARK: - Properties
-    
     private var memberSerialNo: Int?
     
     // MARK: - IBOutlet
     
+    @IBOutlet weak var chekMember: UILabel!
+
     @IBOutlet weak var inputAmount: UITextField!
     
     @IBOutlet weak var buttonRegister: UIButton!
     
-    
+    // MARK: - IBActions
     
     // 登録するボタン押下時の処理
     @IBAction func TapInsertButton(_ sender: Any) {
@@ -47,25 +49,24 @@ class MoneyInputViewController: UIViewController {
             // 登録するボタン押下時の挙動
             for index in selectMember.keys {
                 // 選択した人数分登録処理を実施
-                let _: Bool = DBManager.createPartyDetail(partyId: selectPartyId!, name: selectMember[index]!, mailAddress: "test@tis.co.jp", amount: amount!)
+                if let partyId = selectPartyId,
+                    let name = selectMember[index],
+                    let amount = amount {
+                    let _: Bool = DBManager.entryMember(partyId: partyId, memberName: name, mailAddress: "test@test.co.jp", paymentCompleteFlag: false, paymentAmount: amount)
+                }
             }
         }
-        // ボタンをタップしたら飲み会詳細画面に.遷移
-        let vc = PartyDetailViewController()
-        let nc = UINavigationController(rootViewController: vc)
-        present(nc, animated: true, completion: nil)
+            dismiss(animated: true, completion: nil)
     }
 
     // MARK: - Initializer
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nil, bundle: nil)
-    }
-    
+    /// 参加者選択画面から遷移した場合
+    ///
+    /// - Parameters:
+    ///   - partyId: 飲み会ID
+    ///   - selectedMember: 選択した参加者
     init(partyId: Int, selectedMember: [Int: String]) {
         selectPartyId = partyId
         selectMember = selectedMember
@@ -73,14 +74,16 @@ class MoneyInputViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
+    /// 飲み会詳細画面から編集ボタン押下で遷移した場合
+    ///
+    /// - Parameter serialNo: シリアルNo
     init(serialNo: Int) {
-        memberSerialNo = serialNo
-
+        self.memberSerialNo = serialNo
         super.init(nibName: nil, bundle: nil)
     }
     
-    convenience init() {
-        self.init(nibName: nil, bundle: nil)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     // MARK: - LifeCycle
@@ -90,25 +93,47 @@ class MoneyInputViewController: UIViewController {
         // NavigationBarのタイトルを設定
         self.navigationItem.title = "金額入力"
         
-        if let no = memberSerialNo {
-            // 編集ボタン押下時の挙動
-            let member = DBManager.searchMember(serialNo: no)
-            cheakMember.text = member[0].name
-            inputAmount.text = String(member[0].paymentAmount)
-            buttonRegister.setTitle("更新する", for: UIControlState.normal)
+        let toolBar = UIToolbar()
+        toolBar.sizeToFit()
+        let toolBarBtn = UIBarButtonItem(title: "完了", style: .plain, target: self, action: #selector(doneBtn))
+        toolBar.items = [toolBarBtn]
+        inputAmount.inputAccessoryView = toolBar
+
+        if let serialNo = memberSerialNo {
+            // 飲み会詳細画面から遷移した場合
+            let member = DBManager.searchMemberBySerialNo(serialNo: serialNo)
+            chekMember.text = member.memberName
+            inputAmount.text = String(member.paymentAmount)
+            buttonRegister.setTitle("更新する", for: .normal)
+            
+            let leftItem =  UIBarButtonItem(title: "閉じる", style: .plain, target: self, action: #selector(tapCloseButton))
+            navigationItem.leftBarButtonItem = leftItem
+
         } else {
-            // 金額入力ボタン押下時の挙動
-            cheakMember.numberOfLines = selectMember.count
+            // 参加者選択画面から遷移した場合
+            chekMember.numberOfLines = selectMember.count
             
-            for index in selectMember.keys {
-                name += selectMember[index]! + "\n"
+            name = selectMember.reduce("") { result, member in
+                
+                return result + (result.isEmpty ? member.value : "\n" + member.value)
             }
-            
-            cheakMember.text = name
+            chekMember.text = name
         }
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    // MARK: - Private Functions
+    
+    /// 閉じるボタンタップ時にモーダル解除
+    @objc private func tapCloseButton() {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    //toolbarのdoneボタン
+    @objc private func doneBtn() {
+        inputAmount.resignFirstResponder()
     }
 }
